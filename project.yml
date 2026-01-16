@@ -1,0 +1,35 @@
+name: UltraSnap
+options:
+  bundleIdPrefix: com.michaelgrady
+  deploymentTarget:
+    macOS: "12.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    PRODUCT_BUNDLE_IDENTIFIER: com.michaelgrady.UltraSnap
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    ENABLE_HARDENED_RUNTIME: YES
+    INFOPLIST_KEY_LSUIElement: YES
+
+targets:
+  UltraSnap:
+    type: application
+    platform: macOS
+    sources:
+      - path: UltraSnap
+        type: group
+    settings:
+      base:
+        INFOPLIST_FILE: UltraSnap/Info.plist
+        PRODUCT_NAME: UltraSnap
+        SWIFT_VERSION: "5.9"
+    entitlements:
+      path: UltraSnap/UltraSnap.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
