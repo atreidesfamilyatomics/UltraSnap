@@ -17,14 +17,14 @@ class AccessibilityManager {
 
     /// Convert Cocoa Y coordinate to Quartz Y coordinate
     func cocoaToQuartzY(_ cocoaY: CGFloat, height: CGFloat) -> CGFloat {
-        guard let primaryScreen = NSScreen.screens.first else { return cocoaY }
+        guard let primaryScreen = ScreenManager.shared.primaryScreen else { return cocoaY }
         // In Quartz: y = primaryScreenHeight - cocoaY - windowHeight
         return primaryScreen.frame.height - cocoaY - height
     }
 
     /// Convert Quartz Y coordinate to Cocoa Y coordinate
     func quartzToCocoaY(_ quartzY: CGFloat, height: CGFloat) -> CGFloat {
-        guard let primaryScreen = NSScreen.screens.first else { return quartzY }
+        guard let primaryScreen = ScreenManager.shared.primaryScreen else { return quartzY }
         return primaryScreen.frame.height - quartzY - height
     }
 

@@ -16,8 +16,10 @@ class PreviewOverlay {
     // MARK: - Show Preview
 
     func show(for frame: CGRect, zone: SnapZone) {
-        // Find which screen contains this frame
-        let targetScreen = screenContaining(frame: frame) ?? NSScreen.main ?? NSScreen.screens.first
+        // Find which screen contains this frame (using cached screens)
+        let targetScreen = ScreenManager.shared.screenContaining(frame: frame)
+            ?? ScreenManager.shared.mainScreen
+            ?? ScreenManager.shared.primaryScreen
 
         guard let screen = targetScreen else { return }
 
@@ -44,14 +46,10 @@ class PreviewOverlay {
     }
 
     // MARK: - Find Screen Containing Frame
+    // Now delegates to ScreenManager to use cached screens
 
     private func screenContaining(frame: CGRect) -> NSScreen? {
-        for screen in NSScreen.screens {
-            if screen.frame.intersects(frame) {
-                return screen
-            }
-        }
-        return nil
+        return ScreenManager.shared.screenContaining(frame: frame)
     }
 
     // MARK: - Hide Preview

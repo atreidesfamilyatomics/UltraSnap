@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02049D24F70CFE3D2A07B253 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0252AF54BEE48AEFC6FCC5 /* main.swift */; };
 		0CCBB08E45E5C2A0E81954DD /* PreviewOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */; };
 		48D52763A7AFB8521DE83A06 /* AccessibilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */; };
 		50BEBAC4051412CDC48E03E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E1985ED351D33D61B5C784 /* AppDelegate.swift */; };
 		87BA82564771D013808997CE /* DragMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03F859A07F3238E24D50FC /* DragMonitor.swift */; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2D3C4B5A6978899AABBCC /* main.swift */; };
 		DB7D231405ACE23CA160699A /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E89563D8370F538197AFD7 /* MenuBarController.swift */; };
 		DCB9DA1A6D29C40AEC8742FB /* SnapEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F47637973235B7C5449D25 /* SnapEngine.swift */; };
+		E36583C36822DD6D84539849 /* ScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityManager.swift; sourceTree = "<group>"; };
+		2D0252AF54BEE48AEFC6FCC5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewOverlay.swift; sourceTree = "<group>"; };
 		45B269B9DF0A2DD0C2CE73E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5AAEF819C9486954B291DEEF /* UltraSnap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UltraSnap.entitlements; sourceTree = "<group>"; };
@@ -26,7 +28,7 @@
 		8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UltraSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97E1985ED351D33D61B5C784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9F47637973235B7C5449D25 /* SnapEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapEngine.swift; sourceTree = "<group>"; };
-		F1E2D3C4B5A6978899AABBCC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -45,9 +47,10 @@
 				97E1985ED351D33D61B5C784 /* AppDelegate.swift */,
 				7C03F859A07F3238E24D50FC /* DragMonitor.swift */,
 				45B269B9DF0A2DD0C2CE73E2 /* Info.plist */,
-				F1E2D3C4B5A6978899AABBCC /* main.swift */,
+				2D0252AF54BEE48AEFC6FCC5 /* main.swift */,
 				80E89563D8370F538197AFD7 /* MenuBarController.swift */,
 				3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */,
+				F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */,
 				C9F47637973235B7C5449D25 /* SnapEngine.swift */,
 				5AAEF819C9486954B291DEEF /* UltraSnap.entitlements */,
 			);
@@ -124,10 +127,11 @@
 				48D52763A7AFB8521DE83A06 /* AccessibilityManager.swift in Sources */,
 				50BEBAC4051412CDC48E03E2 /* AppDelegate.swift in Sources */,
 				87BA82564771D013808997CE /* DragMonitor.swift in Sources */,
-				A1B2C3D4E5F6A7B8C9D0E1F2 /* main.swift in Sources */,
 				DB7D231405ACE23CA160699A /* MenuBarController.swift in Sources */,
 				0CCBB08E45E5C2A0E81954DD /* PreviewOverlay.swift in Sources */,
+				E36583C36822DD6D84539849 /* ScreenManager.swift in Sources */,
 				DCB9DA1A6D29C40AEC8742FB /* SnapEngine.swift in Sources */,
+				02049D24F70CFE3D2A07B253 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

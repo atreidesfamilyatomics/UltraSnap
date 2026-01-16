@@ -30,19 +30,14 @@ class SnapEngine {
     // MARK: - Get Screen Containing Point
 
     func screenContaining(point: CGPoint) -> NSScreen? {
-        for screen in NSScreen.screens {
-            if screen.frame.contains(point) {
-                return screen
-            }
-        }
-        // Fallback to main screen if point not in any screen
-        return NSScreen.main ?? NSScreen.screens.first
+        // Use cached screens to avoid XPC churn
+        return ScreenManager.shared.screenContaining(point: point)
     }
 
     // MARK: - Get Current Target Screen
 
     func getTargetScreen() -> NSScreen? {
-        return currentScreen ?? NSScreen.main ?? NSScreen.screens.first
+        return currentScreen ?? ScreenManager.shared.mainScreen ?? ScreenManager.shared.primaryScreen
     }
 
     // MARK: - Set Current Screen from Mouse Location
@@ -195,11 +190,11 @@ class SnapEngine {
 
     func debugPrintScreenInfo() {
         print("[SnapEngine] Screen Configuration:")
-        for (index, screen) in NSScreen.screens.enumerated() {
+        for (index, screen) in ScreenManager.shared.screens.enumerated() {
             print("  Screen \(index): \(screen.localizedName)")
             print("    Frame: \(screen.frame)")
             print("    Visible: \(screen.visibleFrame)")
-            print("    Is Main: \(screen == NSScreen.main)")
+            print("    Is Main: \(screen == ScreenManager.shared.mainScreen)")
         }
     }
 }
