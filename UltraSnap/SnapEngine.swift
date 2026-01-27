@@ -1,7 +1,8 @@
 import Cocoa
 
-// MARK: - Zone Definition
+// MARK: - Zone Definition (DEPRECATED - Use Int indices)
 
+@available(*, deprecated, message: "Use Int zone indices instead. Zones are now represented as 0-indexed positions matching DefaultLayouts.zones() array.")
 enum SnapZone: Int, CaseIterable {
     case leftThird = 0
     case centerThird = 1
@@ -27,6 +28,12 @@ class SnapEngine {
     // Track which screen the user is currently interacting with
     private var currentScreen: NSScreen?
 
+    // Track display identifier for current screen (Phase 1B)
+    private var currentDisplayIdentifier: DisplayIdentifier?
+
+    // Configuration manager for per-display presets (Phase 1C)
+    private let configManager = ConfigurationManager.shared
+
     // MARK: - Get Screen Containing Point
 
     func screenContaining(point: CGPoint) -> NSScreen? {
@@ -44,6 +51,11 @@ class SnapEngine {
 
     func updateCurrentScreen(for mouseLocation: CGPoint) {
         currentScreen = screenContaining(point: mouseLocation)
+        
+        // Track display identifier for current screen
+        if let screen = currentScreen {
+            currentDisplayIdentifier = ScreenManager.shared.getDisplayIdentifier(for: screen)
+        }
     }
 
     // MARK: - Get Screen Frame (Excluding Menu Bar)
@@ -55,84 +67,57 @@ class SnapEngine {
         return screen.visibleFrame
     }
 
-    // MARK: - Calculate Zone Boundaries for Current Screen
+    // MARK: - Get Zone Frames for Current Screen
 
-    func getZoneBoundaries() -> [SnapZone: CGRect] {
-        let screenFrame = getVisibleScreenFrame()
-        let thirdWidth = screenFrame.width / 3
+    /// Get zone frames for current screen based on preset
+    /// Returns array of frames ordered by zone index (0, 1, 2, ...)
+    func getZoneFrames() -> [CGRect] {
+        guard let screen = getTargetScreen() else {
+            return []
+        }
 
-        var zones: [SnapZone: CGRect] = [:]
+        let displayIdentifier = ScreenManager.shared.getDisplayIdentifier(for: screen)
+        let preset = configManager.getPreset(for: displayIdentifier)
 
-        zones[.leftThird] = CGRect(
-            x: screenFrame.origin.x,
-            y: screenFrame.origin.y,
-            width: thirdWidth,
-            height: screenFrame.height
-        )
-
-        zones[.centerThird] = CGRect(
-            x: screenFrame.origin.x + thirdWidth,
-            y: screenFrame.origin.y,
-            width: thirdWidth,
-            height: screenFrame.height
-        )
-
-        zones[.rightThird] = CGRect(
-            x: screenFrame.origin.x + (thirdWidth * 2),
-            y: screenFrame.origin.y,
-            width: thirdWidth,
-            height: screenFrame.height
-        )
-
-        return zones
+        // Returns array of 2-6 frames depending on preset
+        return DefaultLayouts.zones(for: preset, on: screen)
     }
+    
 
     // MARK: - Get Trigger Regions (Top of each zone)
 
-    func getTriggerRegions() -> [SnapZone: CGRect] {
-        guard let screen = getTargetScreen() else { return [:] }
+    /// Get trigger regions (top of screen) for each zone
+    /// Returns array of trigger rects matching zone count
+    func getTriggerRegions() -> [CGRect] {
+        guard let screen = getTargetScreen() else { return [] }
 
-        let screenFrame = screen.frame // Full frame including menu bar
-        let thirdWidth = screenFrame.width / 3
+        let zoneFrames = getZoneFrames()
+        let screenFrame = screen.frame
         let topY = screenFrame.maxY - triggerRegionHeight
 
-        var triggers: [SnapZone: CGRect] = [:]
-
-        triggers[.leftThird] = CGRect(
-            x: screenFrame.origin.x,
-            y: topY,
-            width: thirdWidth,
-            height: triggerRegionHeight
-        )
-
-        triggers[.centerThird] = CGRect(
-            x: screenFrame.origin.x + thirdWidth,
-            y: topY,
-            width: thirdWidth,
-            height: triggerRegionHeight
-        )
-
-        triggers[.rightThird] = CGRect(
-            x: screenFrame.origin.x + (thirdWidth * 2),
-            y: topY,
-            width: thirdWidth,
-            height: triggerRegionHeight
-        )
-
-        return triggers
+        // Create trigger for each zone, maintaining same width/position
+        return zoneFrames.map { zoneFrame in
+            CGRect(
+                x: zoneFrame.origin.x,
+                y: topY,
+                width: zoneFrame.width,
+                height: triggerRegionHeight
+            )
+        }
     }
 
     // MARK: - Determine Zone from Mouse Position
 
-    func zoneForMousePosition(_ mouseLocation: CGPoint) -> SnapZone? {
-        // Update which screen we're targeting based on mouse position
+    /// Determine which zone index (0, 1, 2...) contains mouse position
+    /// Returns nil if mouse not in any trigger region
+    func zoneIndexForMousePosition(_ mouseLocation: CGPoint) -> Int? {
         updateCurrentScreen(for: mouseLocation)
 
         let triggers = getTriggerRegions()
 
-        for (zone, triggerRect) in triggers {
+        for (index, triggerRect) in triggers.enumerated() {
             if triggerRect.contains(mouseLocation) {
-                return zone
+                return index
             }
         }
 
@@ -141,49 +126,70 @@ class SnapEngine {
 
     // MARK: - Get Frame for Zone
 
-    func frameForZone(_ zone: SnapZone) -> CGRect {
-        let zones = getZoneBoundaries()
-        return zones[zone] ?? .zero
+    /// Get frame for zone at given index
+    func frameForZone(at index: Int) -> CGRect {
+        let frames = getZoneFrames()
+        guard index >= 0 && index < frames.count else {
+            print("[SnapEngine] ERROR: Invalid zone index \(index), valid range 0..<\(frames.count)")
+            return .zero
+        }
+        return frames[index]
     }
 
     // MARK: - Snap Window to Zone
 
-    func snapWindowToZone(_ window: AXUIElement, zone: SnapZone) -> Bool {
-        let frame = frameForZone(zone)
+    func snapWindowToZone(_ window: AXUIElement, zoneIndex: Int) -> Bool {
+        let frame = frameForZone(at: zoneIndex)
 
-        print("[SnapEngine] Snapping to zone \(zone.name)")
+        guard frame != .zero else {
+            print("[SnapEngine] ERROR: Cannot snap to invalid frame")
+            return false
+        }
+
+        print("[SnapEngine] Snapping to zone \(zoneIndex)")
         print("  Target screen: \(getTargetScreen()?.localizedName ?? "unknown")")
         print("  Zone frame (Cocoa): \(frame)")
+
+        if let identifier = currentDisplayIdentifier {
+            print("  Display: \(identifier.shortID)")
+        }
 
         return AccessibilityManager.shared.setWindowFrame(window, frame: frame)
     }
 
     // MARK: - Snap Frontmost Window to Zone
 
-    func snapFrontmostWindowToZone(_ zone: SnapZone) -> Bool {
+    func snapFrontmostWindowToZone(at zoneIndex: Int) -> Bool {
         guard let window = AccessibilityManager.shared.getFrontmostWindow() else {
             print("[SnapEngine] No frontmost window found")
             return false
         }
 
-        // CRITICAL: Re-validate screen from current mouse position before snapping
-        // This ensures we use fresh screen info, not stale cached data
         let mouseLocation = NSEvent.mouseLocation
         updateCurrentScreen(for: mouseLocation)
 
         print("[SnapEngine] snapFrontmostWindowToZone called")
         print("  Mouse location: \(mouseLocation)")
         print("  Current screen: \(currentScreen?.localizedName ?? "nil")")
+        print("  Zone index: \(zoneIndex)")
 
-        let success = snapWindowToZone(window, zone: zone)
+        let success = snapWindowToZone(window, zoneIndex: zoneIndex)
 
         if success {
-            print("[SnapEngine] Snapped window to \(zone.name)")
+            print("[SnapEngine] Snapped window to zone \(zoneIndex)")
         } else {
-            print("[SnapEngine] Failed to snap window to \(zone.name)")
+            print("[SnapEngine] Failed to snap window to zone \(zoneIndex)")
         }
 
         return success
+    }
+    
+    // MARK: - Display Identifier Access (Phase 1B)
+    
+    /// Get the current display identifier being operated on
+    /// - Returns: DisplayIdentifier for the current screen, or nil if none set
+    func getCurrentDisplayIdentifier() -> DisplayIdentifier? {
+        return currentDisplayIdentifier
     }
 
     // MARK: - Debug: Print Screen Info
@@ -191,10 +197,12 @@ class SnapEngine {
     func debugPrintScreenInfo() {
         print("[SnapEngine] Screen Configuration:")
         for (index, screen) in ScreenManager.shared.screens.enumerated() {
+            let identifier = ScreenManager.shared.getDisplayIdentifier(for: screen)
             print("  Screen \(index): \(screen.localizedName)")
             print("    Frame: \(screen.frame)")
             print("    Visible: \(screen.visibleFrame)")
             print("    Is Main: \(screen == ScreenManager.shared.mainScreen)")
+            print("    Display ID: \(identifier.shortID)")
         }
     }
 }

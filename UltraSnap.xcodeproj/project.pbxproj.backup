@@ -1,0 +1,349 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02049D24F70CFE3D2A07B253 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0252AF54BEE48AEFC6FCC5 /* main.swift */; };
+		0CCBB08E45E5C2A0E81954DD /* PreviewOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */; };
+		1DADED2DD05054CCCA9CCF69 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E56FFCB287CF2108E00FE8B2 /* AppIcon.icns */; };
+		48D52763A7AFB8521DE83A06 /* AccessibilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */; };
+		50BEBAC4051412CDC48E03E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E1985ED351D33D61B5C784 /* AppDelegate.swift */; };
+		87BA82564771D013808997CE /* DragMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03F859A07F3238E24D50FC /* DragMonitor.swift */; };
+		DB7D231405ACE23CA160699A /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E89563D8370F538197AFD7 /* MenuBarController.swift */; };
+		DCB9DA1A6D29C40AEC8742FB /* SnapEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F47637973235B7C5449D25 /* SnapEngine.swift */; };
+		E36583C36822DD6D84539849 /* ScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityManager.swift; sourceTree = "<group>"; };
+		2D0252AF54BEE48AEFC6FCC5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewOverlay.swift; sourceTree = "<group>"; };
+		45B269B9DF0A2DD0C2CE73E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5AAEF819C9486954B291DEEF /* UltraSnap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UltraSnap.entitlements; sourceTree = "<group>"; };
+		7C03F859A07F3238E24D50FC /* DragMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragMonitor.swift; sourceTree = "<group>"; };
+		80E89563D8370F538197AFD7 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
+		8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UltraSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		97E1985ED351D33D61B5C784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C9F47637973235B7C5449D25 /* SnapEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapEngine.swift; sourceTree = "<group>"; };
+		E56FFCB287CF2108E00FE8B2 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2BCE5F37963BD2E29293C241 = {
+			isa = PBXGroup;
+			children = (
+				652492999179701D6F61005A /* UltraSnap */,
+				B0741F2E97F14D12CB1A121A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		652492999179701D6F61005A /* UltraSnap */ = {
+			isa = PBXGroup;
+			children = (
+				1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */,
+				97E1985ED351D33D61B5C784 /* AppDelegate.swift */,
+				E56FFCB287CF2108E00FE8B2 /* AppIcon.icns */,
+				7C03F859A07F3238E24D50FC /* DragMonitor.swift */,
+				45B269B9DF0A2DD0C2CE73E2 /* Info.plist */,
+				2D0252AF54BEE48AEFC6FCC5 /* main.swift */,
+				80E89563D8370F538197AFD7 /* MenuBarController.swift */,
+				3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */,
+				F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */,
+				C9F47637973235B7C5449D25 /* SnapEngine.swift */,
+				5AAEF819C9486954B291DEEF /* UltraSnap.entitlements */,
+			);
+			path = UltraSnap;
+			sourceTree = "<group>";
+		};
+		B0741F2E97F14D12CB1A121A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F92D46F2DA5A9E9A119C1C2C /* UltraSnap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCCC1334E049305A6A0BD028 /* Build configuration list for PBXNativeTarget "UltraSnap" */;
+			buildPhases = (
+				1E954DC99C3383FBF9B73E3D /* Sources */,
+				6F5D33E84D318E48EEA7E28B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UltraSnap;
+			packageProductDependencies = (
+			);
+			productName = UltraSnap;
+			productReference = 8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F9757054C2363009227E482D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					F92D46F2DA5A9E9A119C1C2C = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 1908F30203EEA93639E573D8 /* Build configuration list for PBXProject "UltraSnap" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 2BCE5F37963BD2E29293C241;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F92D46F2DA5A9E9A119C1C2C /* UltraSnap */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6F5D33E84D318E48EEA7E28B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DADED2DD05054CCCA9CCF69 /* AppIcon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1E954DC99C3383FBF9B73E3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48D52763A7AFB8521DE83A06 /* AccessibilityManager.swift in Sources */,
+				50BEBAC4051412CDC48E03E2 /* AppDelegate.swift in Sources */,
+				87BA82564771D013808997CE /* DragMonitor.swift in Sources */,
+				DB7D231405ACE23CA160699A /* MenuBarController.swift in Sources */,
+				0CCBB08E45E5C2A0E81954DD /* PreviewOverlay.swift in Sources */,
+				E36583C36822DD6D84539849 /* ScreenManager.swift in Sources */,
+				DCB9DA1A6D29C40AEC8742FB /* SnapEngine.swift in Sources */,
+				02049D24F70CFE3D2A07B253 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		19854E91D84C0679DBC03419 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = UltraSnap/UltraSnap.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = UltraSnap/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_NAME = UltraSnap;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		35EEACB7B664F25CC3C007C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelgrady.UltraSnap;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		945E8151D824048B4D13D2AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = UltraSnap/UltraSnap.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = UltraSnap/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_NAME = UltraSnap;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		DA464B1D8DAC4E37C06F72D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelgrady.UltraSnap;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1908F30203EEA93639E573D8 /* Build configuration list for PBXProject "UltraSnap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA464B1D8DAC4E37C06F72D8 /* Debug */,
+				35EEACB7B664F25CC3C007C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BCCC1334E049305A6A0BD028 /* Build configuration list for PBXNativeTarget "UltraSnap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19854E91D84C0679DBC03419 /* Debug */,
+				945E8151D824048B4D13D2AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F9757054C2363009227E482D /* Project object */;
+}

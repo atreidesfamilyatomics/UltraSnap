@@ -15,7 +15,7 @@ class PreviewOverlay {
 
     // MARK: - Show Preview
 
-    func show(for frame: CGRect, zone: SnapZone) {
+    func show(zoneIndex: Int, frame: CGRect) {
         // Find which screen contains this frame (using cached screens)
         let targetScreen = ScreenManager.shared.screenContaining(frame: frame)
             ?? ScreenManager.shared.mainScreen
@@ -35,7 +35,7 @@ class PreviewOverlay {
         view.targetScreen = screen
         view.zoneColor = previewColor
         view.borderColor = previewBorderColor
-        view.zoneName = zone.name
+        view.zoneName = "Zone \(zoneIndex + 1)"  // "Zone 1", "Zone 2", etc.
         view.needsDisplay = true
 
         // Position window to cover the target screen

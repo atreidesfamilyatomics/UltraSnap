@@ -7,17 +7,57 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49172BFF019C4DBCB4BD52F4 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540BED48382E4E3FA470A63F /* SettingsWindowController.swift */; };
+		0100E5F272F84FDDAF22B451 /* ZoneSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA65E4257B94B5CBAA3945A /* ZoneSettingsView.swift */; };
+		B9AAB9CD7060428BA8A303F5 /* ZonePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F307C0CB28E4FE39EB2A69A /* ZonePreviewView.swift */; };
+		89208D24A0C5418DB8934D7C /* KeyboardSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD1020C98F04E90B000DBA0 /* KeyboardSettingsView.swift */; };
+		FB8F6E54229F4B299B912BCB /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059254C148C54B74820C355C /* GeneralSettingsView.swift */; };
 		02049D24F70CFE3D2A07B253 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0252AF54BEE48AEFC6FCC5 /* main.swift */; };
 		0CCBB08E45E5C2A0E81954DD /* PreviewOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */; };
+		1DADED2DD05054CCCA9CCF69 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E56FFCB287CF2108E00FE8B2 /* AppIcon.icns */; };
 		48D52763A7AFB8521DE83A06 /* AccessibilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */; };
 		50BEBAC4051412CDC48E03E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E1985ED351D33D61B5C784 /* AppDelegate.swift */; };
 		87BA82564771D013808997CE /* DragMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03F859A07F3238E24D50FC /* DragMonitor.swift */; };
 		DB7D231405ACE23CA160699A /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E89563D8370F538197AFD7 /* MenuBarController.swift */; };
 		DCB9DA1A6D29C40AEC8742FB /* SnapEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F47637973235B7C5449D25 /* SnapEngine.swift */; };
 		E36583C36822DD6D84539849 /* ScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */; };
+		FF1976A249F84E08B312C937 /* ScreenProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BD9C097A5540569235EF21 /* ScreenProviding.swift */; };
+		297605E49206488FB2D7520E /* WindowManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313D542ED88D4F83BB87CC88 /* WindowManaging.swift */; };
+		BC7B2C5CE9B34008A80228C5 /* UltraSnapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB56F02B254E4BE2B1438485 /* UltraSnapTests.swift */; };
+		77A642BEB0EA437E9EDF4658 /* MockScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACA40134782470CA5C9C426 /* MockScreenManager.swift */; };
+		C83875F78FC146A2B45E782A /* MockAccessibilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087939DFC395453B909531BF /* MockAccessibilityManager.swift */; };
+		F5434151531A15BAE886FC03 /* ShortcutName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC18A0D84F374C26E54929AD /* ShortcutName.swift */; };
+		6C1FEBDC8DE62D6F59D5BEC7 /* ShortcutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BC8DB7F6F0AE1159DA2C7E /* ShortcutManager.swift */; };
+		C0996128A9E2D73E579ACF36 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 840C6CF1DED8A23A6EBE5726 /* KeyboardShortcuts */; };
+		10FE493C80647C4959539911 /* MockSnapEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85455F65DAE6B2A7C716E9BE /* MockSnapEngine.swift */; };
+		D173C9D27BD98177AF698860 /* ShortcutManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D244029E89B9CEF5034A666 /* ShortcutManagerTests.swift */; };
+		BC4E3B1A2D5E4174BD066EBE /* DisplayIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080DB89203BF434FBA3CFBBD /* DisplayIdentifier.swift */; };
+		FE143B831346454E94CA6264 /* DisplayIdentifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89AE24C5BAF4929A81E3F38 /* DisplayIdentifierTests.swift */; };
+		8455717666434841B731E39D /* ScreenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ED29B69CE84A689AFFAFED /* ScreenManagerTests.swift */; };
+		64323436333034652D336266642D343839392D626136392D /* ZoneConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32653932616537622D323835312D343063662D383131352D /* ZoneConfiguration.swift */; };
+		30343366303262652D626432362D343338342D386334332D /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30623936336164332D613634342D343734362D386662362D /* ConfigurationManager.swift */; };
+		38623637336161352D646233302D343361382D616539332D /* DefaultLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39323265323963362D323730632D343066362D623061342D /* DefaultLayouts.swift */; };
+		33326239653265372D326539652D343333372D613162642D /* ZoneConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31653939626462662D353735332D343433662D616531652D /* ZoneConfigurationTests.swift */; };
+		32366235346663352D333032622D343035322D393130372D /* ConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63373763313264322D353236302D343866352D613036662D /* ConfigurationManagerTests.swift */; };
+		64373866646162342D653065662D343664662D613035322D /* DefaultLayoutsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61366537616132392D633264322D346331312D396263332D /* DefaultLayoutsTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		023758BE04F9475BB793CD53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9757054C2363009227E482D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F92D46F2DA5A9E9A119C1C2C;
+			remoteInfo = UltraSnap;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		540BED48382E4E3FA470A63F /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		BCA65E4257B94B5CBAA3945A /* ZoneSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneSettingsView.swift; sourceTree = "<group>"; };
+		1F307C0CB28E4FE39EB2A69A /* ZonePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonePreviewView.swift; sourceTree = "<group>"; };
+		6FD1020C98F04E90B000DBA0 /* KeyboardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettingsView.swift; sourceTree = "<group>"; };
+		059254C148C54B74820C355C /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityManager.swift; sourceTree = "<group>"; };
 		2D0252AF54BEE48AEFC6FCC5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewOverlay.swift; sourceTree = "<group>"; };
@@ -28,14 +68,53 @@
 		8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UltraSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97E1985ED351D33D61B5C784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9F47637973235B7C5449D25 /* SnapEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapEngine.swift; sourceTree = "<group>"; };
+		E56FFCB287CF2108E00FE8B2 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManager.swift; sourceTree = "<group>"; };
+		73BD9C097A5540569235EF21 /* ScreenProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProviding.swift; sourceTree = "<group>"; };
+		313D542ED88D4F83BB87CC88 /* WindowManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManaging.swift; sourceTree = "<group>"; };
+		FB56F02B254E4BE2B1438485 /* UltraSnapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UltraSnapTests.swift; sourceTree = "<group>"; };
+		6ACA40134782470CA5C9C426 /* MockScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockScreenManager.swift; sourceTree = "<group>"; };
+		087939DFC395453B909531BF /* MockAccessibilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAccessibilityManager.swift; sourceTree = "<group>"; };
+		469977425BDA482D80879B44 /* UltraSnapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UltraSnapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC18A0D84F374C26E54929AD /* ShortcutName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutName.swift; sourceTree = "<group>"; };
+		90BC8DB7F6F0AE1159DA2C7E /* ShortcutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutManager.swift; sourceTree = "<group>"; };
+		85455F65DAE6B2A7C716E9BE /* MockSnapEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSnapEngine.swift; sourceTree = "<group>"; };
+		0D244029E89B9CEF5034A666 /* ShortcutManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutManagerTests.swift; sourceTree = "<group>"; };
+		080DB89203BF434FBA3CFBBD /* DisplayIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayIdentifier.swift; sourceTree = "<group>"; };
+		E89AE24C5BAF4929A81E3F38 /* DisplayIdentifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayIdentifierTests.swift; sourceTree = "<group>"; };
+		78ED29B69CE84A689AFFAFED /* ScreenManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenManagerTests.swift; sourceTree = "<group>"; };
+		32653932616537622D323835312D343063662D383131352D /* ZoneConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneConfiguration.swift; sourceTree = "<group>"; };
+		30623936336164332D613634342D343734362D386662362D /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		39323265323963362D323730632D343066362D623061342D /* DefaultLayouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLayouts.swift; sourceTree = "<group>"; };
+		31653939626462662D353735332D343433662D616531652D /* ZoneConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneConfigurationTests.swift; sourceTree = "<group>"; };
+		63373763313264322D353236302D343866352D613036662D /* ConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManagerTests.swift; sourceTree = "<group>"; };
+		61366537616132392D633264322D346331312D396263332D /* DefaultLayoutsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLayoutsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A3D7C2F1E5B4D9A7C2E8F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0996128A9E2D73E579ACF36 /* KeyboardShortcuts in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E885EDBECE0F4B41AEC48B80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		2BCE5F37963BD2E29293C241 = {
 			isa = PBXGroup;
 			children = (
 				652492999179701D6F61005A /* UltraSnap */,
+				19D8CDA956044FA2BB42F0E6 /* UltraSnapTests */,
 				B0741F2E97F14D12CB1A121A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,23 +123,99 @@
 			isa = PBXGroup;
 			children = (
 				1BF3323D5353B2F4D264C5AD /* AccessibilityManager.swift */,
+				A1B2C3D4E5F6789012345678 /* Controllers */,
+				F1E2D3C4B5A6987654321098 /* Views */,
 				97E1985ED351D33D61B5C784 /* AppDelegate.swift */,
+				E56FFCB287CF2108E00FE8B2 /* AppIcon.icns */,
 				7C03F859A07F3238E24D50FC /* DragMonitor.swift */,
 				45B269B9DF0A2DD0C2CE73E2 /* Info.plist */,
 				2D0252AF54BEE48AEFC6FCC5 /* main.swift */,
+				C7E5D2250D4D7AFA1A2AF4ED /* Managers */,
 				80E89563D8370F538197AFD7 /* MenuBarController.swift */,
+				857EEA32717B1461B73AC9ED /* Models */,
 				3CBAB4AD01D6D12EFE2C1A6B /* PreviewOverlay.swift */,
 				F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */,
+				73BD9C097A5540569235EF21 /* ScreenProviding.swift */,
+				39323265323963362D323730632D343066362D623061342D /* DefaultLayouts.swift */,
+
 				C9F47637973235B7C5449D25 /* SnapEngine.swift */,
 				5AAEF819C9486954B291DEEF /* UltraSnap.entitlements */,
+				313D542ED88D4F83BB87CC88 /* WindowManaging.swift */,
 			);
 			path = UltraSnap;
 			sourceTree = "<group>";
 		};
-		B0741F2E97F14D12CB1A121A /* Products */ = {
+		19D8CDA956044FA2BB42F0E6 /* UltraSnapTests */ = {
+			isa = PBXGroup;
+			children = (
+				FB56F02B254E4BE2B1438485 /* UltraSnapTests.swift */,
+				0D244029E89B9CEF5034A666 /* ShortcutManagerTests.swift */,
+				E89AE24C5BAF4929A81E3F38 /* DisplayIdentifierTests.swift */,
+				78ED29B69CE84A689AFFAFED /* ScreenManagerTests.swift */,
+				31653939626462662D353735332D343433662D616531652D /* ZoneConfigurationTests.swift */,
+				63373763313264322D353236302D343866352D613036662D /* ConfigurationManagerTests.swift */,
+				61366537616132392D633264322D346331312D396263332D /* DefaultLayoutsTests.swift */,
+
+				366229F12A78400AAA0C25F7 /* Mocks */,
+			);
+			path = UltraSnapTests;
+			sourceTree = "<group>";
+		};
+		366229F12A78400AAA0C25F7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				6ACA40134782470CA5C9C426 /* MockScreenManager.swift */,
+				087939DFC395453B909531BF /* MockAccessibilityManager.swift */,
+				85455F65DAE6B2A7C716E9BE /* MockSnapEngine.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F6789012345678 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				540BED48382E4E3FA470A63F /* SettingsWindowController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+				C7E5D2250D4D7AFA1A2AF4ED /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				90BC8DB7F6F0AE1159DA2C7E /* ShortcutManager.swift */,
+				30623936336164332D613634342D343734362D386662362D /* ConfigurationManager.swift */,
+
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		857EEA32717B1461B73AC9ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC18A0D84F374C26E54929AD /* ShortcutName.swift */,
+				080DB89203BF434FBA3CFBBD /* DisplayIdentifier.swift */,
+				32653932616537622D323835312D343063662D383131352D /* ZoneConfiguration.swift */,
+
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+
+		F1E2D3C4B5A6987654321098 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BCA65E4257B94B5CBAA3945A /* ZoneSettingsView.swift */,
+				1F307C0CB28E4FE39EB2A69A /* ZonePreviewView.swift */,
+				6FD1020C98F04E90B000DBA0 /* KeyboardSettingsView.swift */,
+				059254C148C54B74820C355C /* GeneralSettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};		B0741F2E97F14D12CB1A121A /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */,
+				469977425BDA482D80879B44 /* UltraSnapTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +228,8 @@
 			buildConfigurationList = BCCC1334E049305A6A0BD028 /* Build configuration list for PBXNativeTarget "UltraSnap" */;
 			buildPhases = (
 				1E954DC99C3383FBF9B73E3D /* Sources */,
+				8A3D7C2F1E5B4D9A7C2E8F1B /* Frameworks */,
+				6F5D33E84D318E48EEA7E28B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -80,10 +237,30 @@
 			);
 			name = UltraSnap;
 			packageProductDependencies = (
+				840C6CF1DED8A23A6EBE5726 /* KeyboardShortcuts */,
 			);
 			productName = UltraSnap;
 			productReference = 8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */;
 			productType = "com.apple.product-type.application";
+		};
+		0EA744F9E8D94C2F95DE2AF7 /* UltraSnapTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2053E55D9E5B406E8A5E9285 /* Build configuration list for PBXNativeTarget "UltraSnapTests" */;
+			buildPhases = (
+				38EEBE3AA300438FB62F067D /* Sources */,
+				E885EDBECE0F4B41AEC48B80 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC5D9ECC4FB2494A83370053 /* PBXTargetDependency */,
+			);
+			name = UltraSnapTests;
+			packageProductDependencies = (
+			);
+			productName = UltraSnapTests;
+			productReference = 469977425BDA482D80879B44 /* UltraSnapTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -98,6 +275,11 @@
 						DevelopmentTeam = "";
 						ProvisioningStyle = Manual;
 					};
+					0EA744F9E8D94C2F95DE2AF7 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+						TestTargetID = F92D46F2DA5A9E9A119C1C2C;
+					};
 				};
 			};
 			buildConfigurationList = 1908F30203EEA93639E573D8 /* Build configuration list for PBXProject "UltraSnap" */;
@@ -110,32 +292,87 @@
 			);
 			mainGroup = 2BCE5F37963BD2E29293C241;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DEC888E33D6B457F3B7ED288 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				F92D46F2DA5A9E9A119C1C2C /* UltraSnap */,
+				0EA744F9E8D94C2F95DE2AF7 /* UltraSnapTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6F5D33E84D318E48EEA7E28B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DADED2DD05054CCCA9CCF69 /* AppIcon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1E954DC99C3383FBF9B73E3D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49172BFF019C4DBCB4BD52F4 /* SettingsWindowController.swift in Sources */,
+				0100E5F272F84FDDAF22B451 /* ZoneSettingsView.swift in Sources */,
+				B9AAB9CD7060428BA8A303F5 /* ZonePreviewView.swift in Sources */,
+				89208D24A0C5418DB8934D7C /* KeyboardSettingsView.swift in Sources */,
+				FB8F6E54229F4B299B912BCB /* GeneralSettingsView.swift in Sources */,
 				48D52763A7AFB8521DE83A06 /* AccessibilityManager.swift in Sources */,
 				50BEBAC4051412CDC48E03E2 /* AppDelegate.swift in Sources */,
 				87BA82564771D013808997CE /* DragMonitor.swift in Sources */,
 				DB7D231405ACE23CA160699A /* MenuBarController.swift in Sources */,
 				0CCBB08E45E5C2A0E81954DD /* PreviewOverlay.swift in Sources */,
 				E36583C36822DD6D84539849 /* ScreenManager.swift in Sources */,
+				FF1976A249F84E08B312C937 /* ScreenProviding.swift in Sources */,
+				6C1FEBDC8DE62D6F59D5BEC7 /* ShortcutManager.swift in Sources */,
+				F5434151531A15BAE886FC03 /* ShortcutName.swift in Sources */,
+				BC4E3B1A2D5E4174BD066EBE /* DisplayIdentifier.swift in Sources */,
 				DCB9DA1A6D29C40AEC8742FB /* SnapEngine.swift in Sources */,
+				297605E49206488FB2D7520E /* WindowManaging.swift in Sources */,
 				02049D24F70CFE3D2A07B253 /* main.swift in Sources */,
+				64323436333034652D336266642D343839392D626136392D /* ZoneConfiguration.swift in Sources */,
+				30343366303262652D626432362D343338342D386334332D /* ConfigurationManager.swift in Sources */,
+				38623637336161352D646233302D343361382D616539332D /* DefaultLayouts.swift in Sources */,
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38EEBE3AA300438FB62F067D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC7B2C5CE9B34008A80228C5 /* UltraSnapTests.swift in Sources */,
+				77A642BEB0EA437E9EDF4658 /* MockScreenManager.swift in Sources */,
+				C83875F78FC146A2B45E782A /* MockAccessibilityManager.swift in Sources */,
+				10FE493C80647C4959539911 /* MockSnapEngine.swift in Sources */,
+				D173C9D27BD98177AF698860 /* ShortcutManagerTests.swift in Sources */,
+				FE143B831346454E94CA6264 /* DisplayIdentifierTests.swift in Sources */,
+				8455717666434841B731E39D /* ScreenManagerTests.swift in Sources */,
+				33326239653265372D326539652D343333372D613162642D /* ZoneConfigurationTests.swift in Sources */,
+				32366235346663352D333032622D343035322D393130372D /* ConfigurationManagerTests.swift in Sources */,
+				64373866646162342D653065662D343664662D613035322D /* DefaultLayoutsTests.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EC5D9ECC4FB2494A83370053 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F92D46F2DA5A9E9A119C1C2C /* UltraSnap */;
+			targetProxy = 023758BE04F9475BB793CD53 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		19854E91D84C0679DBC03419 /* Debug */ = {
@@ -307,6 +544,46 @@
 			};
 			name = Debug;
 		};
+		CF1F368F847E44AB98D3E0A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelgrady.UltraSnapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UltraSnap.app/Contents/MacOS/UltraSnap";
+			};
+			name = Debug;
+		};
+		C1C591118B6C4300B6C27D4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelgrady.UltraSnapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UltraSnap.app/Contents/MacOS/UltraSnap";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -328,7 +605,35 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		2053E55D9E5B406E8A5E9285 /* Build configuration list for PBXNativeTarget "UltraSnapTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF1F368F847E44AB98D3E0A1 /* Debug */,
+				C1C591118B6C4300B6C27D4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DEC888E33D6B457F3B7ED288 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		840C6CF1DED8A23A6EBE5726 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEC888E33D6B457F3B7ED288 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F9757054C2363009227E482D /* Project object */;
 }

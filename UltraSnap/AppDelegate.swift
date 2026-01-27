@@ -1,7 +1,6 @@
 import Cocoa
 import ApplicationServices
 import os.log
-import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -19,6 +18,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         debugLog("applicationDidFinishLaunching called")
+
+        // Load configuration early
+        _ = ConfigurationManager.shared.loadConfiguration()
+        debugLog("Configuration loaded")
 
         // Check accessibility permissions - this will show native prompt if not granted
         let hasPermission = checkAccessibilityPermissions()
@@ -66,6 +69,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         snapEngine = SnapEngine()
         debugLog("snapEngine created")
 
+        // Initialize global keyboard shortcuts
+        ShortcutManager.shared.configure(with: snapEngine!)
+        debugLog("ShortcutManager configured with snapEngine")
+
         previewOverlay = PreviewOverlay()
         debugLog("previewOverlay created")
 
@@ -80,19 +87,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         debugLog("dragMonitor started")
 
         debugLog("UltraSnap initialized successfully - check menu bar for icon!")
-
-        // Play a sound to confirm launch
-        NSSound.beep()
-
-        // Show startup confirmation (temporary for debugging)
-        DispatchQueue.main.async {
-            let alert = NSAlert()
-            alert.messageText = "UltraSnap Started"
-            alert.informativeText = "Menu bar icon should be visible.\nMenuBarController: \(self.menuBarController != nil ? "Created" : "FAILED")"
-            alert.alertStyle = .informational
-            alert.addButton(withTitle: "OK")
-            alert.runModal()
-        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

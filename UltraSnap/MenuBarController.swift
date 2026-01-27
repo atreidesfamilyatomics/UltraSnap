@@ -1,5 +1,6 @@
 import Cocoa
 import os.log
+import KeyboardShortcuts
 
 // MARK: - Menu Bar Controller
 // Manages the status bar item and dropdown menu
@@ -126,6 +127,17 @@ class MenuBarController {
 
         menu.addItem(NSMenuItem.separator())
 
+        // Settings
+        let settingsItem = NSMenuItem(
+            title: "Settings...",
+            action: #selector(openSettings),
+            keyEquivalent: ","
+        )
+        settingsItem.target = self
+        menu.addItem(settingsItem)
+
+        menu.addItem(NSMenuItem.separator())
+
         // Quit
         let quitItem = NSMenuItem(
             title: "Quit UltraSnap",
@@ -141,15 +153,19 @@ class MenuBarController {
     // MARK: - Menu Actions
 
     @objc private func snapLeftThird() {
-        _ = snapEngine.snapFrontmostWindowToZone(.leftThird)
+        _ = snapEngine.snapFrontmostWindowToZone(at: 0)
     }
 
     @objc private func snapCenterThird() {
-        _ = snapEngine.snapFrontmostWindowToZone(.centerThird)
+        _ = snapEngine.snapFrontmostWindowToZone(at: 1)
     }
 
     @objc private func snapRightThird() {
-        _ = snapEngine.snapFrontmostWindowToZone(.rightThird)
+        _ = snapEngine.snapFrontmostWindowToZone(at: 2)
+    }
+
+    @objc private func openSettings() {
+        SettingsWindowController.shared.showWindow()
     }
 
     @objc private func quitApp() {

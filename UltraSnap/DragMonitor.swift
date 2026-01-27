@@ -12,7 +12,7 @@ class DragMonitor {
     private var localMonitor: Any?
 
     private var isDragging = false
-    private var currentZone: SnapZone?
+    private var currentZone: Int?  // Zone index (0, 1, 2, ...)
     private var dragStartLocation: CGPoint?
 
     // Track if mouse button is down
@@ -94,9 +94,9 @@ class DragMonitor {
     private func handleMouseUp(_ event: NSEvent) {
         isMouseDown = false
 
-        if isDragging, let zone = currentZone {
+        if isDragging, let zoneIndex = currentZone {
             // User released in a zone - snap the window
-            performSnap(to: zone)
+            performSnap(to: zoneIndex)
         }
 
         // Reset state
@@ -128,17 +128,17 @@ class DragMonitor {
         guard isDragging else { return }
 
         // Check which zone the mouse is in
-        let zone = snapEngine.zoneForMousePosition(mouseLocation)
+        let detectedZoneIndex = snapEngine.zoneIndexForMousePosition(mouseLocation)
 
-        if zone != currentZone {
-            currentZone = zone
+        if detectedZoneIndex != currentZone {
+            currentZone = detectedZoneIndex
 
-            if let zone = zone {
+            if let zoneIndex = detectedZoneIndex {
                 // Show preview for this zone
-                let zoneFrame = snapEngine.frameForZone(zone)
-                print("[DragMonitor] Entered zone: \(zone.name) at \(mouseLocation)")
-                print("[DragMonitor] Zone frame: \(zoneFrame)")
-                previewOverlay.show(for: zoneFrame, zone: zone)
+                let frame = snapEngine.frameForZone(at: zoneIndex)
+                print("[DragMonitor] Entered zone \(zoneIndex) at \(mouseLocation)")
+                print("[DragMonitor] Zone frame: \(frame)")
+                previewOverlay.show(zoneIndex: zoneIndex, frame: frame)
             } else {
                 // Not in any zone, hide preview
                 previewOverlay.hide()
@@ -148,13 +148,13 @@ class DragMonitor {
 
     // MARK: - Perform Snap
 
-    private func performSnap(to zone: SnapZone) {
-        print("[DragMonitor] performSnap called for zone: \(zone.name)")
+    private func performSnap(to zoneIndex: Int) {
+        print("[DragMonitor] performSnap called for zone: \(zoneIndex)")
         // Small delay to ensure the window has finished its drag
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-            print("[DragMonitor] Executing snap to \(zone.name)")
-            let success = self?.snapEngine.snapFrontmostWindowToZone(zone) ?? false
-            print("[DragMonitor] Snap result: \(success ? "SUCCESS" : "FAILED")")
+            print("[DragMonitor] Executing snap to zone \(zoneIndex)")
+            let result = self?.snapEngine.snapFrontmostWindowToZone(at: zoneIndex) ?? false
+            print("[DragMonitor] Snap result: \(result ? "SUCCESS" : "FAILED")")
         }
     }
 }

@@ -11,6 +11,12 @@ class AccessibilityManager {
 
     private init() {}
 
+    // MARK: - Permissions Check
+
+    func checkAccessibilityPermissions() -> Bool {
+        return AXIsProcessTrusted()
+    }
+
     // MARK: - Coordinate Conversion
     // NSScreen uses Cocoa coordinates: origin at BOTTOM-left of primary screen, Y increases UP
     // Accessibility API uses Quartz coordinates: origin at TOP-left of primary screen, Y increases DOWN
@@ -171,5 +177,12 @@ class AccessibilityManager {
         var pid: pid_t = 0
         AXUIElementGetPid(window, &pid)
         return NSRunningApplication(processIdentifier: pid)
+    }
+}
+
+// MARK: - WindowManaging Protocol Conformance
+extension AccessibilityManager: WindowManaging {
+    func setWindowFrame(_ element: AXUIElement, to frame: CGRect) -> Bool {
+        return setWindowFrame(element, frame: frame)
     }
 }

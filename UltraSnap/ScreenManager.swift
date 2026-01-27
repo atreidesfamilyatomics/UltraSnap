@@ -54,8 +54,14 @@ class ScreenManager {
     // MARK: - Cache Management
 
     @objc private func screenConfigurationDidChange(_ notification: Notification) {
-        print("[ScreenManager] Display configuration changed - refreshing cache")
+        debugLog("Screen configuration changed - refreshing cache")
         refreshCache()
+
+        // Log display identifiers for debugging
+        for (index, screen) in screens.enumerated() {
+            let identifier = getDisplayIdentifier(for: screen)
+            debugLog("Display \(index): \(identifier.shortID), Origin=(\(identifier.originX), \(identifier.originY))")
+        }
     }
 
     /// Force refresh the screen cache (called automatically on display changes)
@@ -65,7 +71,7 @@ class ScreenManager {
         _cachedPrimaryScreen = NSScreen.screens.first
         _lastUpdateTime = Date()
 
-        print("[ScreenManager] Cache refreshed: \(_cachedScreens.count) screen(s)")
+        debugLog("Cache refreshed: \(_cachedScreens.count) screen(s)")
     }
 
     // MARK: - Helper Methods
@@ -88,5 +94,44 @@ class ScreenManager {
             }
         }
         return nil
+    }
+
+    /// Get display ID for a screen
+    func getDisplayID(for screen: NSScreen) -> CGDirectDisplayID? {
+        guard let screenNumber = screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? NSNumber else {
+            return nil
+        }
+        return CGDirectDisplayID(screenNumber.uint32Value)
+    }
+
+    // MARK: - Display Identification (Phase 1B)
+
+    /// Get DisplayIdentifier for a screen
+    /// - Parameter screen: The NSScreen to identify
+    /// - Returns: DisplayIdentifier that uniquely identifies this screen
+    func getDisplayIdentifier(for screen: NSScreen) -> DisplayIdentifier {
+        return DisplayIdentifier(from: screen)
+    }
+
+    /// Find screen matching a DisplayIdentifier
+    /// - Parameters:
+    ///   - identifier: The DisplayIdentifier to match
+    ///   - tolerance: Position tolerance in points for identical monitors
+    /// - Returns: NSScreen that matches the identifier, or nil if not found
+    func findScreen(matching identifier: DisplayIdentifier, tolerance: CGFloat = 10.0) -> NSScreen? {
+        return screens.first { identifier.matches($0, tolerance: tolerance) }
+    }
+
+    // MARK: - Debug Logging
+
+    private func debugLog(_ message: String) {
+        print("[ScreenManager] \(message)")
+    }
+}
+
+// MARK: - ScreenProviding Protocol Conformance
+extension ScreenManager: ScreenProviding {
+    func refreshScreenCache() {
+        refreshCache()
     }
 }
