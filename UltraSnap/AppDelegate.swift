@@ -8,32 +8,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var dragMonitor: DragMonitor?
     private var previewOverlay: PreviewOverlay?
     private var snapEngine: SnapEngine?
-    private let logger = Logger(subsystem: "com.michaelgrady.UltraSnap", category: "AppDelegate")
-
-    private func debugLog(_ message: String) {
-        let output = "[AppDelegate] \(message)\n"
-        FileHandle.standardError.write(output.data(using: .utf8)!)
-        logger.info("\(message)")
-    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        debugLog("applicationDidFinishLaunching called")
+        AppLogger.appDelegate.info("applicationDidFinishLaunching called")
 
         // Load configuration early
         _ = ConfigurationManager.shared.loadConfiguration()
-        debugLog("Configuration loaded")
+        AppLogger.appDelegate.debug("Configuration loaded")
 
         // Check accessibility permissions - this will show native prompt if not granted
         let hasPermission = checkAccessibilityPermissions()
-        debugLog("accessibility permission check: \(hasPermission)")
+        AppLogger.appDelegate.debug("accessibility permission check: \(hasPermission)")
 
         if !hasPermission {
-            debugLog("Accessibility permission not yet granted - user needs to enable in System Settings")
+            AppLogger.appDelegate.warning("Accessibility permission not yet granted - user needs to enable in System Settings")
             // Still set up the app so menu bar appears - features won't work until permission granted
         }
 
         setupApplication()
-        debugLog("applicationDidFinishLaunching complete")
+        AppLogger.appDelegate.info("applicationDidFinishLaunching complete")
     }
 
     private func checkAccessibilityPermissions() -> Bool {
@@ -63,30 +56,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setupApplication() {
-        debugLog("setupApplication starting...")
+        AppLogger.appDelegate.debug("setupApplication starting...")
 
         // Initialize core components
         snapEngine = SnapEngine()
-        debugLog("snapEngine created")
+        AppLogger.appDelegate.debug("snapEngine created")
 
         // Initialize global keyboard shortcuts
         ShortcutManager.shared.configure(with: snapEngine!)
-        debugLog("ShortcutManager configured with snapEngine")
+        AppLogger.appDelegate.debug("ShortcutManager configured with snapEngine")
 
         previewOverlay = PreviewOverlay()
-        debugLog("previewOverlay created")
+        AppLogger.appDelegate.debug("previewOverlay created")
 
         dragMonitor = DragMonitor(snapEngine: snapEngine!, previewOverlay: previewOverlay!)
-        debugLog("dragMonitor created")
+        AppLogger.appDelegate.debug("dragMonitor created")
 
         menuBarController = MenuBarController(snapEngine: snapEngine!)
-        debugLog("menuBarController created and retained: \(menuBarController != nil)")
+        let menuBarCreated = menuBarController != nil
+        AppLogger.appDelegate.debug("menuBarController created and retained: \(menuBarCreated)")
 
         // Start monitoring for window drags
         dragMonitor?.startMonitoring()
-        debugLog("dragMonitor started")
+        AppLogger.appDelegate.debug("dragMonitor started")
 
-        debugLog("UltraSnap initialized successfully - check menu bar for icon!")
+        AppLogger.appDelegate.info("UltraSnap initialized successfully - check menu bar for icon!")
     }
 
     func applicationWillTerminate(_ notification: Notification) {

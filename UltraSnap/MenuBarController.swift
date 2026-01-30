@@ -9,11 +9,10 @@ class MenuBarController {
 
     private var statusItem: NSStatusItem?
     private let snapEngine: SnapEngine
-    private let logger = Logger(subsystem: "com.michaelgrady.UltraSnap", category: "MenuBar")
 
     init(snapEngine: SnapEngine) {
         self.snapEngine = snapEngine
-        debugLog("init called")
+        AppLogger.menuBar.debug("init called")
 
         // Ensure status item is created on main thread
         if Thread.isMainThread {
@@ -24,51 +23,47 @@ class MenuBarController {
             }
         }
 
-        debugLog("init complete, statusItem: \(String(describing: statusItem))")
-    }
-
-    private func debugLog(_ message: String) {
-        let output = "[MenuBarController] \(message)\n"
-        FileHandle.standardError.write(output.data(using: .utf8)!)
-        logger.info("\(message)")
+        let statusItemDesc = String(describing: statusItem)
+        AppLogger.menuBar.debug("init complete, statusItem: \(statusItemDesc)")
     }
 
     // MARK: - Setup Status Item
 
     private func setupStatusItem() {
-        debugLog("setupStatusItem starting on thread: \(Thread.isMainThread ? "main" : "background")")
+        AppLogger.menuBar.debug("setupStatusItem starting on thread: \(Thread.isMainThread ? "main" : "background")")
 
         // Create the status item
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        debugLog("statusItem created: \(statusItem != nil ? "success" : "FAILED")")
+        let statusItemCreated = statusItem != nil
+        AppLogger.menuBar.debug("statusItem created: \(statusItemCreated ? "success" : "FAILED")")
 
         guard let item = statusItem else {
-            debugLog("ERROR: Failed to create status item!")
+            AppLogger.menuBar.error("Failed to create status item!")
             return
         }
 
         guard let button = item.button else {
-            debugLog("ERROR: Status item button is nil!")
+            AppLogger.menuBar.error("Status item button is nil!")
             return
         }
 
-        debugLog("button obtained successfully")
+        AppLogger.menuBar.debug("button obtained successfully")
 
         // Use SF Symbol for the icon
         if let image = NSImage(systemSymbolName: "rectangle.split.3x1", accessibilityDescription: "UltraSnap") {
             image.isTemplate = true
             button.image = image
-            debugLog("SF Symbol 'rectangle.split.3x1' set successfully")
+            AppLogger.menuBar.debug("SF Symbol 'rectangle.split.3x1' set successfully")
         } else {
             // Fallback text if symbol not available
             button.title = "US"
-            debugLog("SF Symbol not available, using text fallback 'US'")
+            AppLogger.menuBar.debug("SF Symbol not available, using text fallback 'US'")
         }
 
         button.toolTip = "UltraSnap - Window Manager"
 
         setupMenu()
-        debugLog("setupStatusItem complete - menu bar icon should be visible")
+        AppLogger.menuBar.debug("setupStatusItem complete - menu bar icon should be visible")
     }
 
     // MARK: - Setup Menu

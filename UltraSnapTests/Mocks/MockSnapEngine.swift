@@ -1,14 +1,16 @@
 import Cocoa
 @testable import UltraSnap
 
+/// Mock SnapEngine for unit testing
+/// Tracks snap operations without actually manipulating windows
 class MockSnapEngine: SnapEngine {
     var snapCalled = false
-    var lastZone: SnapZone?
+    var lastZoneIndex: Int?
     var callCount = 0
 
-    override func snapFrontmostWindowToZone(_ zone: SnapZone) -> Bool {
+    override func snapFrontmostWindowToZone(at zoneIndex: Int) -> Bool {
         snapCalled = true
-        lastZone = zone
+        lastZoneIndex = zoneIndex
         callCount += 1
         return true
     }
@@ -16,11 +18,11 @@ class MockSnapEngine: SnapEngine {
     // Test helper methods
     func reset() {
         snapCalled = false
-        lastZone = nil
+        lastZoneIndex = nil
         callCount = 0
     }
 
-    func verifySnapCalled(forZone expectedZone: SnapZone) -> Bool {
-        return snapCalled && lastZone == expectedZone
+    func verifySnapCalled(forZone expectedZoneIndex: Int) -> Bool {
+        return snapCalled && lastZoneIndex == expectedZoneIndex
     }
 }

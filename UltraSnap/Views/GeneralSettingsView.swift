@@ -1,4 +1,5 @@
 import Cocoa
+import os.log
 
 class GeneralSettingsView: NSView {
 
@@ -27,7 +28,7 @@ class GeneralSettingsView: NSView {
         // Launch at login (placeholder - Phase 3)
         launchAtLoginCheckbox = NSButton(checkboxWithTitle: "Launch at Login", target: self, action: #selector(launchAtLoginChanged))
         launchAtLoginCheckbox.frame = NSRect(x: 20, y: yPosition, width: 200, height: 20)
-        launchAtLoginCheckbox.state = .off  // TODO: Load from system
+        launchAtLoginCheckbox.state = .off  // TODO(v2.0): Load from LoginItem API - see NEXT_STEPS.md
         launchAtLoginCheckbox.isEnabled = false  // Disabled for Phase 2
         addSubview(launchAtLoginCheckbox)
 
@@ -65,12 +66,12 @@ class GeneralSettingsView: NSView {
     }
 
     @objc private func launchAtLoginChanged() {
-        // TODO: Phase 3 implementation
+        // TODO(v2.0): Implement using ServiceManagement.SMAppService - see NEXT_STEPS.md
     }
 
     @objc private func showPreviewChanged() {
         let enabled = showPreviewCheckbox.state == .on
         UserDefaults.standard.set(enabled, forKey: "showPreview")
-        print("[GeneralSettings] Show preview: \(enabled)")
+        AppLogger.settings.debug("Show preview: \(enabled)")
     }
 }

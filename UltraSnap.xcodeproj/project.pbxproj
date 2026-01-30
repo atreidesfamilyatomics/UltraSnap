@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		APPLOGER01234567890ABCDEF /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPLOGERFILEREF0123456789 /* AppLogger.swift */; };
 		49172BFF019C4DBCB4BD52F4 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540BED48382E4E3FA470A63F /* SettingsWindowController.swift */; };
 		0100E5F272F84FDDAF22B451 /* ZoneSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA65E4257B94B5CBAA3945A /* ZoneSettingsView.swift */; };
 		B9AAB9CD7060428BA8A303F5 /* ZonePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F307C0CB28E4FE39EB2A69A /* ZonePreviewView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		APPLOGERFILEREF0123456789 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		540BED48382E4E3FA470A63F /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		BCA65E4257B94B5CBAA3945A /* ZoneSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneSettingsView.swift; sourceTree = "<group>"; };
 		1F307C0CB28E4FE39EB2A69A /* ZonePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonePreviewView.swift; sourceTree = "<group>"; };
@@ -137,9 +139,9 @@
 				F0ADE52A0D98F8E34CC1298D /* ScreenManager.swift */,
 				73BD9C097A5540569235EF21 /* ScreenProviding.swift */,
 				39323265323963362D323730632D343066362D623061342D /* DefaultLayouts.swift */,
-
 				C9F47637973235B7C5449D25 /* SnapEngine.swift */,
 				5AAEF819C9486954B291DEEF /* UltraSnap.entitlements */,
+				UTILITIESGRPREF012345678 /* Utilities */,
 				313D542ED88D4F83BB87CC88 /* WindowManaging.swift */,
 			);
 			path = UltraSnap;
@@ -211,7 +213,16 @@
 			);
 			path = Views;
 			sourceTree = "<group>";
-		};		B0741F2E97F14D12CB1A121A /* Products */ = {
+		};
+		UTILITIESGRPREF012345678 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				APPLOGERFILEREF0123456789 /* AppLogger.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B0741F2E97F14D12CB1A121A /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8A788F6C4B3B3DDB331B9327 /* UltraSnap.app */,
@@ -321,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				APPLOGER01234567890ABCDEF /* AppLogger.swift in Sources */,
 				49172BFF019C4DBCB4BD52F4 /* SettingsWindowController.swift in Sources */,
 				0100E5F272F84FDDAF22B451 /* ZoneSettingsView.swift in Sources */,
 				B9AAB9CD7060428BA8A303F5 /* ZonePreviewView.swift in Sources */,

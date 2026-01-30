@@ -1,8 +1,28 @@
 import Cocoa
 
-// MARK: - Preview Overlay
-// Semi-transparent window that shows zone preview during drag
-
+/// Displays a semi-transparent overlay showing the target zone during window drag operations
+///
+/// PreviewOverlay creates a borderless, transparent window that sits above other windows
+/// but allows click-through. When the user drags a window into a snap zone's trigger region,
+/// this overlay highlights where the window will be positioned when released.
+///
+/// ## Architecture
+/// The overlay consists of two components:
+/// - `PreviewOverlay`: Controller that manages window lifecycle and positioning
+/// - `OverlayView`: Custom NSView that draws the zone highlight and label
+///
+/// ## Usage
+/// ```swift
+/// let overlay = PreviewOverlay()
+/// overlay.show(zoneIndex: 0, frame: zoneFrame)  // Show preview
+/// overlay.hide()  // Hide when drag ends or leaves zone
+/// ```
+///
+/// ## Visual Design
+/// - Blue-tinted semi-transparent fill with 30% opacity
+/// - Rounded corners (8pt radius)
+/// - Darker blue border (80% opacity, 3pt width)
+/// - Centered zone label ("Zone 1", "Zone 2", etc.)
 class PreviewOverlay {
 
     private var overlayWindow: NSWindow?
@@ -56,6 +76,14 @@ class PreviewOverlay {
 
     func hide() {
         overlayWindow?.orderOut(nil)
+        // Extra safety: ensure window is not accepting events
+        overlayWindow?.ignoresMouseEvents = true
+    }
+    
+    // MARK: - Check Visibility
+    
+    var isVisible: Bool {
+        return overlayWindow?.isVisible ?? false
     }
 
     // MARK: - Create Overlay Window
@@ -69,7 +97,9 @@ class PreviewOverlay {
             defer: false
         )
 
-        window.level = .floating
+        // Use a lower window level to avoid interfering with dropdowns/menus
+        // .popUpMenu is just below system UI elements but above normal windows
+        window.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.popUpMenuWindow)) - 1)
         window.backgroundColor = .clear
         window.isOpaque = false
         window.hasShadow = false

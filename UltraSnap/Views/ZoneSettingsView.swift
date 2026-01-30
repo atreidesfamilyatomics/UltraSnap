@@ -1,4 +1,5 @@
 import Cocoa
+import os.log
 
 class ZoneSettingsView: NSView {
 
@@ -186,7 +187,7 @@ class ZoneSettingsView: NSView {
         updatePreview()
         updateDescription()
 
-        print("[ZoneSettingsView] Preset changed to \(preset.rawValue)")
+        AppLogger.settings.debug("Preset changed to \(preset.rawValue)")
     }
 
     private func updatePreview() {

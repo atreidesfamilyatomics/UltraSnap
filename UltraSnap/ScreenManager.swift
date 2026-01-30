@@ -1,4 +1,5 @@
 import Cocoa
+import os.log
 
 // MARK: - Screen Manager
 // Singleton that caches screen information to reduce XPC calls to UIIntelligenceSupport
@@ -54,13 +55,13 @@ class ScreenManager {
     // MARK: - Cache Management
 
     @objc private func screenConfigurationDidChange(_ notification: Notification) {
-        debugLog("Screen configuration changed - refreshing cache")
+        AppLogger.screenManager.info("Screen configuration changed - refreshing cache")
         refreshCache()
 
         // Log display identifiers for debugging
         for (index, screen) in screens.enumerated() {
             let identifier = getDisplayIdentifier(for: screen)
-            debugLog("Display \(index): \(identifier.shortID), Origin=(\(identifier.originX), \(identifier.originY))")
+            AppLogger.screenManager.debug("Display \(index): \(identifier.shortID), Origin=(\(identifier.originX), \(identifier.originY))")
         }
     }
 
@@ -71,7 +72,8 @@ class ScreenManager {
         _cachedPrimaryScreen = NSScreen.screens.first
         _lastUpdateTime = Date()
 
-        debugLog("Cache refreshed: \(_cachedScreens.count) screen(s)")
+        let screenCount = _cachedScreens.count
+        AppLogger.screenManager.debug("Cache refreshed: \(screenCount) screen(s)")
     }
 
     // MARK: - Helper Methods
@@ -122,11 +124,6 @@ class ScreenManager {
         return screens.first { identifier.matches($0, tolerance: tolerance) }
     }
 
-    // MARK: - Debug Logging
-
-    private func debugLog(_ message: String) {
-        print("[ScreenManager] \(message)")
-    }
 }
 
 // MARK: - ScreenProviding Protocol Conformance

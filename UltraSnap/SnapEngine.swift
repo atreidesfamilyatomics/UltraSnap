@@ -1,29 +1,18 @@
 import Cocoa
-
-// MARK: - Zone Definition (DEPRECATED - Use Int indices)
-
-@available(*, deprecated, message: "Use Int zone indices instead. Zones are now represented as 0-indexed positions matching DefaultLayouts.zones() array.")
-enum SnapZone: Int, CaseIterable {
-    case leftThird = 0
-    case centerThird = 1
-    case rightThird = 2
-
-    var name: String {
-        switch self {
-        case .leftThird: return "Left Third"
-        case .centerThird: return "Center Third"
-        case .rightThird: return "Right Third"
-        }
-    }
-}
+import os.log
 
 // MARK: - Snap Engine
 // Handles zone calculation and window snapping for ultrawide displays
 
 class SnapEngine {
 
-    // Trigger region: top portion of screen where dragging activates zones
+    // MARK: - Constants
+
+    /// Height in points of the trigger region at the top of each screen
+    /// where dragging activates zone snapping
     private let triggerRegionHeight: CGFloat = 100
+
+    // MARK: - State
 
     // Track which screen the user is currently interacting with
     private var currentScreen: NSScreen?
@@ -130,7 +119,7 @@ class SnapEngine {
     func frameForZone(at index: Int) -> CGRect {
         let frames = getZoneFrames()
         guard index >= 0 && index < frames.count else {
-            print("[SnapEngine] ERROR: Invalid zone index \(index), valid range 0..<\(frames.count)")
+            AppLogger.snapEngine.error("Invalid zone index \(index), valid range 0..<\(frames.count)")
             return .zero
         }
         return frames[index]
@@ -142,16 +131,17 @@ class SnapEngine {
         let frame = frameForZone(at: zoneIndex)
 
         guard frame != .zero else {
-            print("[SnapEngine] ERROR: Cannot snap to invalid frame")
+            AppLogger.snapEngine.error("Cannot snap to invalid frame")
             return false
         }
 
-        print("[SnapEngine] Snapping to zone \(zoneIndex)")
-        print("  Target screen: \(getTargetScreen()?.localizedName ?? "unknown")")
-        print("  Zone frame (Cocoa): \(frame)")
+        let targetScreenName = getTargetScreen()?.localizedName ?? "unknown"
+        AppLogger.snapEngine.debug("Snapping to zone \(zoneIndex)")
+        AppLogger.snapEngine.debug("  Target screen: \(targetScreenName)")
+        AppLogger.snapEngine.debug("  Zone frame (Cocoa): \(frame.debugDescription)")
 
         if let identifier = currentDisplayIdentifier {
-            print("  Display: \(identifier.shortID)")
+            AppLogger.snapEngine.debug("  Display: \(identifier.shortID)")
         }
 
         return AccessibilityManager.shared.setWindowFrame(window, frame: frame)
@@ -161,24 +151,25 @@ class SnapEngine {
 
     func snapFrontmostWindowToZone(at zoneIndex: Int) -> Bool {
         guard let window = AccessibilityManager.shared.getFrontmostWindow() else {
-            print("[SnapEngine] No frontmost window found")
+            AppLogger.snapEngine.debug("No frontmost window found")
             return false
         }
 
         let mouseLocation = NSEvent.mouseLocation
         updateCurrentScreen(for: mouseLocation)
 
-        print("[SnapEngine] snapFrontmostWindowToZone called")
-        print("  Mouse location: \(mouseLocation)")
-        print("  Current screen: \(currentScreen?.localizedName ?? "nil")")
-        print("  Zone index: \(zoneIndex)")
+        let currentScreenName = currentScreen?.localizedName ?? "nil"
+        AppLogger.snapEngine.debug("snapFrontmostWindowToZone called")
+        AppLogger.snapEngine.debug("  Mouse location: \(mouseLocation.debugDescription)")
+        AppLogger.snapEngine.debug("  Current screen: \(currentScreenName)")
+        AppLogger.snapEngine.debug("  Zone index: \(zoneIndex)")
 
         let success = snapWindowToZone(window, zoneIndex: zoneIndex)
 
         if success {
-            print("[SnapEngine] Snapped window to zone \(zoneIndex)")
+            AppLogger.snapEngine.debug("Snapped window to zone \(zoneIndex)")
         } else {
-            print("[SnapEngine] Failed to snap window to zone \(zoneIndex)")
+            AppLogger.snapEngine.warning("Failed to snap window to zone \(zoneIndex)")
         }
 
         return success
@@ -195,14 +186,14 @@ class SnapEngine {
     // MARK: - Debug: Print Screen Info
 
     func debugPrintScreenInfo() {
-        print("[SnapEngine] Screen Configuration:")
+        AppLogger.snapEngine.debug("Screen Configuration:")
         for (index, screen) in ScreenManager.shared.screens.enumerated() {
             let identifier = ScreenManager.shared.getDisplayIdentifier(for: screen)
-            print("  Screen \(index): \(screen.localizedName)")
-            print("    Frame: \(screen.frame)")
-            print("    Visible: \(screen.visibleFrame)")
-            print("    Is Main: \(screen == ScreenManager.shared.mainScreen)")
-            print("    Display ID: \(identifier.shortID)")
+            AppLogger.snapEngine.debug("  Screen \(index): \(screen.localizedName)")
+            AppLogger.snapEngine.debug("    Frame: \(screen.frame.debugDescription)")
+            AppLogger.snapEngine.debug("    Visible: \(screen.visibleFrame.debugDescription)")
+            AppLogger.snapEngine.debug("    Is Main: \(screen == ScreenManager.shared.mainScreen)")
+            AppLogger.snapEngine.debug("    Display ID: \(identifier.shortID)")
         }
     }
 }

@@ -1,5 +1,6 @@
 import Cocoa
 import ApplicationServices
+import os.log
 
 // MARK: - Accessibility Manager
 // Handles window manipulation via macOS Accessibility API
@@ -124,9 +125,9 @@ class AccessibilityManager {
         // Convert Cocoa coordinates (NSScreen) to Quartz coordinates (Accessibility API)
         let quartzFrame = cocoaFrameToQuartz(frame)
 
-        print("[AccessibilityManager] Setting window frame:")
-        print("  Cocoa frame: \(frame)")
-        print("  Quartz frame: \(quartzFrame)")
+        AppLogger.accessibility.debug("Setting window frame:")
+        AppLogger.accessibility.debug("  Cocoa frame: \(frame.debugDescription)")
+        AppLogger.accessibility.debug("  Quartz frame: \(quartzFrame.debugDescription)")
 
         // First pass: set size
         _ = setWindowSize(window, size: quartzFrame.size)

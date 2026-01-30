@@ -1,12 +1,42 @@
 import Cocoa
+import os.log
 
-// MARK: - Drag Monitor
-// Monitors global mouse events to detect window dragging
-
+/// Monitors global mouse events to detect window dragging and trigger zone snapping
+///
+/// DragMonitor sets up both global and local event monitors to track mouse down, drag,
+/// and mouse up events. When a drag is detected and the cursor enters a zone's trigger
+/// region at the top of the screen, it shows a preview overlay and prepares to snap
+/// the window when the mouse is released.
+///
+/// ## Event Flow
+/// 1. Mouse down: Record start position
+/// 2. Mouse dragged: If moved > threshold, mark as dragging; check for zone entry
+/// 3. Zone entered: Show preview overlay
+/// 4. Mouse up in zone: Snap window to zone
+/// 5. Mouse up outside zone: Cancel snap, hide preview
+///
+/// ## Architecture
+/// - Uses `NSEvent.addGlobalMonitorForEvents` for system-wide tracking
+/// - Uses `NSEvent.addLocalMonitorForEvents` when UltraSnap is focused
+/// - Coordinates with `SnapEngine` for zone detection and window snapping
+/// - Coordinates with `PreviewOverlay` for visual feedback
+///
+/// ## Threading
+/// All event handlers run on the main thread. Window snapping includes a small
+/// delay (0.05s) to ensure the dragged window has finished its native drag operation.
 class DragMonitor {
+
+    // MARK: - Constants
+
+    /// Minimum distance in points the mouse must move to be considered a drag
+    private let dragThreshold: CGFloat = 10.0
+
+    // MARK: - Dependencies
 
     private let snapEngine: SnapEngine
     private let previewOverlay: PreviewOverlay
+
+    // MARK: - State
 
     private var globalMonitor: Any?
     private var localMonitor: Any?
@@ -41,7 +71,7 @@ class DragMonitor {
             return event
         }
 
-        print("Drag monitoring started")
+        AppLogger.dragMonitor.info("Drag monitoring started")
     }
 
     // MARK: - Stop Monitoring
@@ -57,7 +87,7 @@ class DragMonitor {
             localMonitor = nil
         }
 
-        print("Drag monitoring stopped")
+        AppLogger.dragMonitor.info("Drag monitoring stopped")
     }
 
     // MARK: - Handle Global Events
@@ -116,12 +146,11 @@ class DragMonitor {
         let mouseLocation = NSEvent.mouseLocation
 
         // Check if we're near a drag start (indicates window being dragged)
-        // We consider it a drag if mouse has moved more than 10 pixels
         if let startLocation = dragStartLocation {
             let distance = hypot(mouseLocation.x - startLocation.x, mouseLocation.y - startLocation.y)
-            if distance > 10 && !isDragging {
+            if distance > dragThreshold && !isDragging {
                 isDragging = true
-                print("[DragMonitor] Drag started at \(mouseLocation)")
+                AppLogger.dragMonitor.debug("Drag started at \(mouseLocation.debugDescription)")
             }
         }
 
@@ -136,8 +165,8 @@ class DragMonitor {
             if let zoneIndex = detectedZoneIndex {
                 // Show preview for this zone
                 let frame = snapEngine.frameForZone(at: zoneIndex)
-                print("[DragMonitor] Entered zone \(zoneIndex) at \(mouseLocation)")
-                print("[DragMonitor] Zone frame: \(frame)")
+                AppLogger.dragMonitor.debug("Entered zone \(zoneIndex) at \(mouseLocation.debugDescription)")
+                AppLogger.dragMonitor.debug("Zone frame: \(frame.debugDescription)")
                 previewOverlay.show(zoneIndex: zoneIndex, frame: frame)
             } else {
                 // Not in any zone, hide preview
@@ -149,12 +178,12 @@ class DragMonitor {
     // MARK: - Perform Snap
 
     private func performSnap(to zoneIndex: Int) {
-        print("[DragMonitor] performSnap called for zone: \(zoneIndex)")
+        AppLogger.dragMonitor.debug("performSnap called for zone: \(zoneIndex)")
         // Small delay to ensure the window has finished its drag
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-            print("[DragMonitor] Executing snap to zone \(zoneIndex)")
+            AppLogger.dragMonitor.debug("Executing snap to zone \(zoneIndex)")
             let result = self?.snapEngine.snapFrontmostWindowToZone(at: zoneIndex) ?? false
-            print("[DragMonitor] Snap result: \(result ? "SUCCESS" : "FAILED")")
+            AppLogger.dragMonitor.debug("Snap result: \(result ? "SUCCESS" : "FAILED")")
         }
     }
 }
