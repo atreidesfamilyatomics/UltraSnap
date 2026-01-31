@@ -65,13 +65,6 @@ class PreviewOverlay {
         window.orderFront(nil)
     }
 
-    // MARK: - Find Screen Containing Frame
-    // Now delegates to ScreenManager to use cached screens
-
-    private func screenContaining(frame: CGRect) -> NSScreen? {
-        return ScreenManager.shared.screenContaining(frame: frame)
-    }
-
     // MARK: - Hide Preview
 
     func hide() {
@@ -99,7 +92,10 @@ class PreviewOverlay {
 
         // Use a lower window level to avoid interfering with dropdowns/menus
         // .popUpMenu is just below system UI elements but above normal windows
-        window.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.popUpMenuWindow)) - 1)
+        let popUpLevel = Int(CGWindowLevelForKey(.popUpMenuWindow))
+        let normalLevel = Int(CGWindowLevelForKey(.normalWindow))
+        let overlayLevel = max(popUpLevel - 1, normalLevel)
+        window.level = NSWindow.Level(rawValue: overlayLevel)
         window.backgroundColor = .clear
         window.isOpaque = false
         window.hasShadow = false

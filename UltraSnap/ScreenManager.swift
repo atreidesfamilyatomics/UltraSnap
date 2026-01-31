@@ -14,7 +14,6 @@ class ScreenManager {
     private var _cachedScreens: [NSScreen] = []
     private var _cachedMainScreen: NSScreen?
     private var _cachedPrimaryScreen: NSScreen?
-    private var _lastUpdateTime: Date = .distantPast
 
     // MARK: - Public Accessors (Cached)
 
@@ -70,7 +69,6 @@ class ScreenManager {
         _cachedScreens = NSScreen.screens
         _cachedMainScreen = NSScreen.main
         _cachedPrimaryScreen = NSScreen.screens.first
-        _lastUpdateTime = Date()
 
         let screenCount = _cachedScreens.count
         AppLogger.screenManager.debug("Cache refreshed: \(screenCount) screen(s)")

@@ -35,26 +35,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return AXIsProcessTrustedWithOptions(options as CFDictionary)
     }
 
-    private func showAccessibilityAlert() {
-        let alert = NSAlert()
-        alert.messageText = "Accessibility Permission Required"
-        alert.informativeText = "UltraSnap needs accessibility permissions to manage your windows.\n\nClick 'Open System Settings' to grant permission, then restart UltraSnap."
-        alert.alertStyle = .warning
-        alert.addButton(withTitle: "Open System Settings")
-        alert.addButton(withTitle: "Quit")
-
-        let response = alert.runModal()
-
-        if response == .alertFirstButtonReturn {
-            // Open System Settings to Accessibility
-            let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!
-            NSWorkspace.shared.open(url)
-        }
-
-        // Quit app - user needs to restart after granting permission
-        NSApplication.shared.terminate(nil)
-    }
-
     private func setupApplication() {
         AppLogger.appDelegate.debug("setupApplication starting...")
 
@@ -62,17 +42,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         snapEngine = SnapEngine()
         AppLogger.appDelegate.debug("snapEngine created")
 
+        guard let engine = snapEngine else {
+            AppLogger.appDelegate.error("Failed to create snapEngine")
+            return
+        }
+
         // Initialize global keyboard shortcuts
-        ShortcutManager.shared.configure(with: snapEngine!)
+        ShortcutManager.shared.configure(with: engine)
         AppLogger.appDelegate.debug("ShortcutManager configured with snapEngine")
 
         previewOverlay = PreviewOverlay()
         AppLogger.appDelegate.debug("previewOverlay created")
 
-        dragMonitor = DragMonitor(snapEngine: snapEngine!, previewOverlay: previewOverlay!)
+        guard let overlay = previewOverlay else {
+            AppLogger.appDelegate.error("Failed to create previewOverlay")
+            return
+        }
+
+        dragMonitor = DragMonitor(snapEngine: engine, previewOverlay: overlay)
         AppLogger.appDelegate.debug("dragMonitor created")
 
-        menuBarController = MenuBarController(snapEngine: snapEngine!)
+        menuBarController = MenuBarController(snapEngine: engine)
         let menuBarCreated = menuBarController != nil
         AppLogger.appDelegate.debug("menuBarController created and retained: \(menuBarCreated)")
 

@@ -24,15 +24,33 @@ class AccessibilityManager {
 
     /// Convert Cocoa Y coordinate to Quartz Y coordinate
     func cocoaToQuartzY(_ cocoaY: CGFloat, height: CGFloat) -> CGFloat {
-        guard let primaryScreen = ScreenManager.shared.primaryScreen else { return cocoaY }
+        // Try primaryScreen first, then mainScreen, then first screen
+        let screen = ScreenManager.shared.primaryScreen
+            ?? ScreenManager.shared.mainScreen
+            ?? ScreenManager.shared.screens.first
+
+        guard let targetScreen = screen else {
+            AppLogger.accessibility.warning("No screen available for coordinate conversion, using 1080p fallback")
+            // Fallback: assume standard 1080p height if no screens
+            return 1080 - cocoaY - height
+        }
+
         // In Quartz: y = primaryScreenHeight - cocoaY - windowHeight
-        return primaryScreen.frame.height - cocoaY - height
+        return targetScreen.frame.height - cocoaY - height
     }
 
     /// Convert Quartz Y coordinate to Cocoa Y coordinate
     func quartzToCocoaY(_ quartzY: CGFloat, height: CGFloat) -> CGFloat {
-        guard let primaryScreen = ScreenManager.shared.primaryScreen else { return quartzY }
-        return primaryScreen.frame.height - quartzY - height
+        let screen = ScreenManager.shared.primaryScreen
+            ?? ScreenManager.shared.mainScreen
+            ?? ScreenManager.shared.screens.first
+
+        guard let targetScreen = screen else {
+            AppLogger.accessibility.warning("No screen available for coordinate conversion, using 1080p fallback")
+            return 1080 - quartzY - height
+        }
+
+        return targetScreen.frame.height - quartzY - height
     }
 
     /// Convert a Cocoa frame (from NSScreen) to Quartz frame (for Accessibility API)
@@ -54,7 +72,14 @@ class AccessibilityManager {
         var focusedWindow: AnyObject?
         let result = AXUIElementCopyAttributeValue(appElement, kAXFocusedWindowAttribute as CFString, &focusedWindow)
 
-        guard result == .success else { return nil }
+        guard result == .success else {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to get focused window: AXError \(errorCode)")
+            return nil
+        }
+
+        // focusedWindow is guaranteed to be AXUIElement when result == .success
+        // swiftlint:disable:next force_cast
         return (focusedWindow as! AXUIElement)
     }
 
@@ -64,12 +89,26 @@ class AccessibilityManager {
         var positionValue: AnyObject?
         let result = AXUIElementCopyAttributeValue(window, kAXPositionAttribute as CFString, &positionValue)
 
-        guard result == .success,
-              let value = positionValue,
-              CFGetTypeID(value) == AXValueGetTypeID() else { return nil }
+        guard result == .success else {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to get window position: AXError \(errorCode)")
+            return nil
+        }
+
+        guard let value = positionValue,
+              CFGetTypeID(value) == AXValueGetTypeID() else {
+            AppLogger.accessibility.error("Window position value is not AXValue type")
+            return nil
+        }
 
         var position = CGPoint.zero
-        AXValueGetValue(value as! AXValue, .cgPoint, &position)
+        // Type is verified by CFGetTypeID check above
+        // swiftlint:disable:next force_cast
+        guard AXValueGetValue(value as! AXValue, .cgPoint, &position) else {
+            AppLogger.accessibility.error("Failed to extract CGPoint from AXValue")
+            return nil
+        }
+
         return position
     }
 
@@ -79,12 +118,26 @@ class AccessibilityManager {
         var sizeValue: AnyObject?
         let result = AXUIElementCopyAttributeValue(window, kAXSizeAttribute as CFString, &sizeValue)
 
-        guard result == .success,
-              let value = sizeValue,
-              CFGetTypeID(value) == AXValueGetTypeID() else { return nil }
+        guard result == .success else {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to get window size: AXError \(errorCode)")
+            return nil
+        }
+
+        guard let value = sizeValue,
+              CFGetTypeID(value) == AXValueGetTypeID() else {
+            AppLogger.accessibility.error("Window size value is not AXValue type")
+            return nil
+        }
 
         var size = CGSize.zero
-        AXValueGetValue(value as! AXValue, .cgSize, &size)
+        // Type is verified by CFGetTypeID check above
+        // swiftlint:disable:next force_cast
+        guard AXValueGetValue(value as! AXValue, .cgSize, &size) else {
+            AppLogger.accessibility.error("Failed to extract CGSize from AXValue")
+            return nil
+        }
+
         return size
     }
 
@@ -100,9 +153,16 @@ class AccessibilityManager {
 
     func setWindowPosition(_ window: AXUIElement, position: CGPoint) -> Bool {
         var pos = position
-        guard let value = AXValueCreate(.cgPoint, &pos) else { return false }
+        guard let value = AXValueCreate(.cgPoint, &pos) else {
+            AppLogger.accessibility.error("Failed to create AXValue for position")
+            return false
+        }
 
         let result = AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, value)
+        if result != .success {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to set window position: AXError \(errorCode)")
+        }
         return result == .success
     }
 
@@ -110,9 +170,16 @@ class AccessibilityManager {
 
     func setWindowSize(_ window: AXUIElement, size: CGSize) -> Bool {
         var sz = size
-        guard let value = AXValueCreate(.cgSize, &sz) else { return false }
+        guard let value = AXValueCreate(.cgSize, &sz) else {
+            AppLogger.accessibility.error("Failed to create AXValue for size")
+            return false
+        }
 
         let result = AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, value)
+        if result != .success {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to set window size: AXError \(errorCode)")
+        }
         return result == .success
     }
 
@@ -168,7 +235,11 @@ class AccessibilityManager {
         var titleValue: AnyObject?
         let result = AXUIElementCopyAttributeValue(window, kAXTitleAttribute as CFString, &titleValue)
 
-        guard result == .success else { return nil }
+        guard result == .success else {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to get window title: AXError \(errorCode)")
+            return nil
+        }
         return titleValue as? String
     }
 
@@ -176,8 +247,17 @@ class AccessibilityManager {
 
     func getWindowApp(_ window: AXUIElement) -> NSRunningApplication? {
         var pid: pid_t = 0
-        AXUIElementGetPid(window, &pid)
-        return NSRunningApplication(processIdentifier: pid)
+        let result = AXUIElementGetPid(window, &pid)
+        if result != .success {
+            let errorCode = result.rawValue
+            AppLogger.accessibility.debug("Failed to get window PID: AXError \(errorCode)")
+            return nil
+        }
+        guard let app = NSRunningApplication(processIdentifier: pid) else {
+            AppLogger.accessibility.debug("No running application found for PID \(pid)")
+            return nil
+        }
+        return app
     }
 }
 
