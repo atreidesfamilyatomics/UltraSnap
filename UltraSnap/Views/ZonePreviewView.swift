@@ -31,11 +31,15 @@ class ZonePreviewView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        guard !zones.isEmpty else { return }
-
         // Draw background
         NSColor.controlBackgroundColor.setFill()
         bounds.fill()
+
+        // Handle "Off" preset (empty zones)
+        if zones.isEmpty {
+            drawDisabledState()
+            return
+        }
 
         // Calculate preview area (maintain aspect ratio)
         let padding: CGFloat = 20
@@ -121,5 +125,73 @@ class ZonePreviewView: NSView {
         let scaledHeight = rect.height * yScale
 
         return CGRect(x: scaledX, y: scaledY, width: scaledWidth, height: scaledHeight)
+    }
+
+    private func drawDisabledState() {
+        // Calculate preview area (maintain aspect ratio)
+        let padding: CGFloat = 20
+        let availableWidth = bounds.width - (padding * 2)
+        let availableHeight = bounds.height - (padding * 2)
+
+        var previewWidth = availableWidth
+        var previewHeight = previewWidth / aspectRatio
+
+        if previewHeight > availableHeight {
+            previewHeight = availableHeight
+            previewWidth = previewHeight * aspectRatio
+        }
+
+        let previewX = (bounds.width - previewWidth) / 2
+        let previewY = (bounds.height - previewHeight) / 2
+        let previewRect = CGRect(x: previewX, y: previewY, width: previewWidth, height: previewHeight)
+
+        // Draw screen border with disabled style
+        NSColor.separatorColor.setStroke()
+        let borderPath = NSBezierPath(rect: previewRect)
+        borderPath.lineWidth = 2
+        borderPath.stroke()
+
+        // Fill with disabled gray
+        NSColor.systemGray.withAlphaComponent(0.2).setFill()
+        previewRect.fill()
+
+        // Draw diagonal lines to indicate disabled
+        NSColor.separatorColor.setStroke()
+        let diagonalPath = NSBezierPath()
+        diagonalPath.lineWidth = 1
+
+        // Draw subtle diagonal pattern
+        let spacing: CGFloat = 30
+        var x = previewRect.minX
+        while x < previewRect.maxX + previewRect.height {
+            diagonalPath.move(to: NSPoint(x: x, y: previewRect.minY))
+            diagonalPath.line(to: NSPoint(x: x - previewRect.height, y: previewRect.maxY))
+            x += spacing
+        }
+        diagonalPath.stroke()
+
+        // Draw "Disabled" label
+        let label = "Snapping Disabled"
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 16, weight: .semibold),
+            .foregroundColor: NSColor.secondaryLabelColor
+        ]
+        let labelSize = label.size(withAttributes: attrs)
+        let labelX = previewRect.midX - (labelSize.width / 2)
+        let labelY = previewRect.midY - (labelSize.height / 2)
+
+        // Draw label background for readability
+        let labelPadding: CGFloat = 8
+        let labelBgRect = CGRect(
+            x: labelX - labelPadding,
+            y: labelY - labelPadding / 2,
+            width: labelSize.width + (labelPadding * 2),
+            height: labelSize.height + labelPadding
+        )
+        NSColor.controlBackgroundColor.withAlphaComponent(0.9).setFill()
+        let labelBgPath = NSBezierPath(roundedRect: labelBgRect, xRadius: 4, yRadius: 4)
+        labelBgPath.fill()
+
+        label.draw(at: NSPoint(x: labelX, y: labelY), withAttributes: attrs)
     }
 }

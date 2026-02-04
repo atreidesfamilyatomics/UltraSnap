@@ -4,9 +4,12 @@ import Cocoa
 // MARK: - Zone Preset Types
 
 enum ZonePreset: String, Codable, CaseIterable {
+    case off = "Off"
     case thirds = "Equal Thirds"
     case halves = "Halves"
     case quarters = "Quarters"
+    case sixths = "Sixths (2x3)"
+    case eighths = "Eighths (2x4)"
     case wideLeft = "Wide Left (40/30/30)"
     case wideCenter = "Wide Center (30/40/30)"
     case verticalHalves = "Vertical Halves"
@@ -19,9 +22,12 @@ enum ZonePreset: String, Codable, CaseIterable {
 
     var zoneCount: Int {
         switch self {
+        case .off: return 0
         case .thirds: return 3
         case .halves: return 2
         case .quarters: return 4
+        case .sixths: return 6
+        case .eighths: return 8
         case .wideLeft: return 3
         case .wideCenter: return 3
         case .verticalHalves: return 2

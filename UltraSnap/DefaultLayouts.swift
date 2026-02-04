@@ -7,12 +7,18 @@ struct DefaultLayouts {
         let frame = screen.visibleFrame
 
         switch preset {
+        case .off:
+            return []  // No zones - snapping disabled
         case .thirds:
             return calculateThirds(in: frame)
         case .halves:
             return calculateHalves(in: frame)
         case .quarters:
             return calculateQuarters(in: frame)
+        case .sixths:
+            return calculateSixths(in: frame)
+        case .eighths:
+            return calculateEighths(in: frame)
         case .wideLeft:
             return calculateWideLeft(in: frame)
         case .wideCenter:
@@ -114,6 +120,54 @@ struct DefaultLayouts {
             // Bottom row
             CGRect(x: frame.minX, y: frame.minY, width: colWidth, height: rowHeight),
             CGRect(x: frame.minX + colWidth, y: frame.minY, width: colWidth, height: rowHeight)
+        ]
+    }
+
+    // Sixths: 2 rows × 3 columns (6 zones)
+    // Zone layout:
+    // ┌─────────┬─────────┬─────────┐
+    // │ Zone 0  │ Zone 1  │ Zone 2  │
+    // ├─────────┼─────────┼─────────┤
+    // │ Zone 3  │ Zone 4  │ Zone 5  │
+    // └─────────┴─────────┴─────────┘
+    private static func calculateSixths(in frame: CGRect) -> [CGRect] {
+        let colWidth = frame.width / 3
+        let rowHeight = frame.height / 2
+
+        return [
+            // Top row (left to right)
+            CGRect(x: frame.minX, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth * 2, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            // Bottom row (left to right)
+            CGRect(x: frame.minX, y: frame.minY, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth, y: frame.minY, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth * 2, y: frame.minY, width: colWidth, height: rowHeight)
+        ]
+    }
+
+    // Eighths: 2 rows × 4 columns (8 zones)
+    // Zone layout:
+    // ┌──────┬──────┬──────┬──────┐
+    // │  0   │  1   │  2   │  3   │
+    // ├──────┼──────┼──────┼──────┤
+    // │  4   │  5   │  6   │  7   │
+    // └──────┴──────┴──────┴──────┘
+    private static func calculateEighths(in frame: CGRect) -> [CGRect] {
+        let colWidth = frame.width / 4
+        let rowHeight = frame.height / 2
+
+        return [
+            // Top row (left to right)
+            CGRect(x: frame.minX, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth * 2, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth * 3, y: frame.minY + rowHeight, width: colWidth, height: rowHeight),
+            // Bottom row (left to right)
+            CGRect(x: frame.minX, y: frame.minY, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth, y: frame.minY, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth * 2, y: frame.minY, width: colWidth, height: rowHeight),
+            CGRect(x: frame.minX + colWidth * 3, y: frame.minY, width: colWidth, height: rowHeight)
         ]
     }
 }

@@ -207,9 +207,12 @@ class ZoneSettingsView: NSView {
         }
 
         let descriptions: [ZonePreset: String] = [
+            .off: "Window snapping disabled on this display. Windows won't snap to zones.",
             .thirds: "Three equal columns (33% each). Classic ultrawide layout.",
             .halves: "Two equal columns (50% each). Simple left/right split.",
             .quarters: "2×2 grid with four zones. Great for multitasking.",
+            .sixths: "2×3 grid with six zones. Perfect for ultrawide multitasking.",
+            .eighths: "2×4 grid with eight zones. Maximum density for ultrawide displays.",
             .wideLeft: "Left column is wider (40/30/30). Perfect for IDE on left.",
             .wideCenter: "Center column is wider (30/40/30). Great for browser-focused work.",
             .verticalHalves: "Top and bottom split (50/50). Best for vertical monitors.",

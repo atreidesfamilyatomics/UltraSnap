@@ -135,12 +135,75 @@ final class ZoneConfigurationTests: XCTestCase {
 
         for preset in ZonePreset.allCases {
             let zones = DefaultLayouts.zones(for: preset, on: screen)
-            XCTAssertFalse(zones.isEmpty, "Preset \(preset.rawValue) should return zones")
-            XCTAssertEqual(zones.count, preset.zoneCount, "Preset \(preset.rawValue) should return \(preset.zoneCount) zones")
+
+            // "Off" preset should return empty zones (snapping disabled)
+            if preset == .off {
+                XCTAssertTrue(zones.isEmpty, "Preset \(preset.rawValue) should return no zones")
+                XCTAssertEqual(preset.zoneCount, 0, "Preset \(preset.rawValue) should have zoneCount of 0")
+            } else {
+                XCTAssertFalse(zones.isEmpty, "Preset \(preset.rawValue) should return zones")
+                XCTAssertEqual(zones.count, preset.zoneCount, "Preset \(preset.rawValue) should return \(preset.zoneCount) zones")
+            }
         }
     }
 
     func testZonePresetCount() {
-        XCTAssertEqual(ZonePreset.allCases.count, 8, "Should have 8 zone presets")
+        XCTAssertEqual(ZonePreset.allCases.count, 11, "Should have 11 zone presets")
+    }
+
+    func testNewZonePresetCounts() {
+        XCTAssertEqual(ZonePreset.off.zoneCount, 0)
+        XCTAssertEqual(ZonePreset.sixths.zoneCount, 6)
+        XCTAssertEqual(ZonePreset.eighths.zoneCount, 8)
+    }
+
+    func testSixthsLayoutReturnsCorrectZones() {
+        guard let screen = NSScreen.main else {
+            XCTFail("No main screen available")
+            return
+        }
+
+        let zones = DefaultLayouts.zones(for: .sixths, on: screen)
+        XCTAssertEqual(zones.count, 6, "Sixths should return 6 zones")
+
+        // Verify zones form a 2x3 grid
+        let frame = screen.visibleFrame
+        let expectedWidth = frame.width / 3
+        let expectedHeight = frame.height / 2
+
+        for zone in zones {
+            XCTAssertEqual(zone.width, expectedWidth, accuracy: 1.0, "Zone width should be 1/3 of screen")
+            XCTAssertEqual(zone.height, expectedHeight, accuracy: 1.0, "Zone height should be 1/2 of screen")
+        }
+    }
+
+    func testEighthsLayoutReturnsCorrectZones() {
+        guard let screen = NSScreen.main else {
+            XCTFail("No main screen available")
+            return
+        }
+
+        let zones = DefaultLayouts.zones(for: .eighths, on: screen)
+        XCTAssertEqual(zones.count, 8, "Eighths should return 8 zones")
+
+        // Verify zones form a 2x4 grid
+        let frame = screen.visibleFrame
+        let expectedWidth = frame.width / 4
+        let expectedHeight = frame.height / 2
+
+        for zone in zones {
+            XCTAssertEqual(zone.width, expectedWidth, accuracy: 1.0, "Zone width should be 1/4 of screen")
+            XCTAssertEqual(zone.height, expectedHeight, accuracy: 1.0, "Zone height should be 1/2 of screen")
+        }
+    }
+
+    func testOffPresetReturnsNoZones() {
+        guard let screen = NSScreen.main else {
+            XCTFail("No main screen available")
+            return
+        }
+
+        let zones = DefaultLayouts.zones(for: .off, on: screen)
+        XCTAssertTrue(zones.isEmpty, "Off preset should return no zones")
     }
 }
