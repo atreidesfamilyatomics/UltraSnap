@@ -217,7 +217,15 @@ class ZoneSettingsView: NSView {
             .wideCenter: "Center column is wider (30/40/30). Great for browser-focused work.",
             .verticalHalves: "Top and bottom split (50/50). Best for vertical monitors.",
             .verticalThirds: "Three horizontal rows (33% each). Vertical monitor stacking.",
-            .grid: "2×3 grid with six zones. Maximum organization."
+            .grid: "2×3 grid with six zones. Maximum organization.",
+            .leftHalfRightQuarters: "Left half full height, right half split into 2×2 grid. Perfect for main window + four supporting apps.",
+            .rightHalfLeftQuarters: "Right half full height, left half split into 2×2 grid. Great for reference docs on right, tools on left.",
+            .topHalfBottomQuarters: "Top half full width, bottom half split into 2×2 grid. Ideal for main app above, four tools below.",
+            .bottomHalfTopQuarters: "Bottom half full width, top half split into 2×2 grid. Good for console below, multiple editors above.",
+            .leftTwoThirdsRightQuarters: "Left 2/3 full height, right 1/3 as 2×2 grid. Maximum space for main work, compact tools on right.",
+            .rightTwoThirdsLeftQuarters: "Right 2/3 full height, left 1/3 as 2×2 grid. Wide main area on right, compact utilities on left.",
+            .leftThirdRightSixths: "Left 1/3 full height, right 2/3 as 2×3 grid. Sidebar layout with six organized zones on right.",
+            .rightThirdLeftSixths: "Right 1/3 full height, left 2/3 as 2×3 grid. Six zones on left, full sidebar on right."
         ]
 
         descriptionLabel.stringValue = descriptions[preset] ?? ""

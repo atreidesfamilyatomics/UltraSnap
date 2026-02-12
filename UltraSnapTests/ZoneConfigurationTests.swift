@@ -148,7 +148,7 @@ final class ZoneConfigurationTests: XCTestCase {
     }
 
     func testZonePresetCount() {
-        XCTAssertEqual(ZonePreset.allCases.count, 11, "Should have 11 zone presets")
+        XCTAssertEqual(ZonePreset.allCases.count, 19, "Should have 19 zone presets (11 original + 8 asymmetric)")
     }
 
     func testNewZonePresetCounts() {

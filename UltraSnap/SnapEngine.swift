@@ -11,6 +11,15 @@ class SnapEngine {
     /// Height in points of the trigger region at the top of each screen
     /// where dragging activates zone snapping
     private let triggerRegionHeight: CGFloat = 100
+    
+    /// Width in points of the trigger region at the left/right edges of the screen
+    private let triggerRegionWidth: CGFloat = 100
+    
+    /// Height in points of the trigger region at the bottom of the screen
+    private let bottomTriggerHeight: CGFloat = 100
+    
+    /// Size in points of corner trigger regions (square)
+    private let cornerSize: CGFloat = 80
 
     // MARK: - State
 
@@ -99,11 +108,46 @@ class SnapEngine {
 
     /// Determine which zone index (0, 1, 2...) contains mouse position
     /// Returns nil if mouse not in any trigger region
+    /// 
+    /// Checks trigger regions in this priority order:
+    /// 1. Corners (for grid-based presets)
+    /// 2. Bottom edge (for grid-based presets)
+    /// 3. Left edge (for grid-based presets)
+    /// 4. Right edge (for grid-based presets)
+    /// 5. Top edge (all presets with zones)
     func zoneIndexForMousePosition(_ mouseLocation: CGPoint) -> Int? {
         updateCurrentScreen(for: mouseLocation)
 
+        guard let screen = getTargetScreen() else { return nil }
+        let displayIdentifier = ScreenManager.shared.getDisplayIdentifier(for: screen)
+        let preset = configManager.getPreset(for: displayIdentifier)
+        let visibleFrame = screen.visibleFrame
+        
+        // Get grid shape if this preset supports edge/corner triggers
+        if let gridShape = preset.gridShape {
+            // Check corners first (highest priority to avoid ambiguity)
+            if let cornerZone = checkCorners(mouseLocation, visibleFrame: visibleFrame, gridShape: gridShape) {
+                return cornerZone
+            }
+            
+            // Check bottom edge
+            if let bottomZone = checkBottomEdge(mouseLocation, visibleFrame: visibleFrame, gridShape: gridShape) {
+                return bottomZone
+            }
+            
+            // Check left edge
+            if let leftZone = checkLeftEdge(mouseLocation, visibleFrame: visibleFrame, gridShape: gridShape) {
+                return leftZone
+            }
+            
+            // Check right edge
+            if let rightZone = checkRightEdge(mouseLocation, visibleFrame: visibleFrame, gridShape: gridShape) {
+                return rightZone
+            }
+        }
+        
+        // Fall back to top triggers (works for all presets)
         let triggers = getTriggerRegions()
-
         for (index, triggerRect) in triggers.enumerated() {
             if triggerRect.contains(mouseLocation) {
                 return index
@@ -111,6 +155,139 @@ class SnapEngine {
         }
 
         return nil
+    }
+    
+    // MARK: - Corner Detection
+    
+    /// Check if mouse is in a corner trigger region and return the corresponding zone index
+    private func checkCorners(_ mouseLocation: CGPoint, visibleFrame: CGRect, gridShape: (columns: Int, rows: Int)) -> Int? {
+        // Bottom-left corner
+        let bottomLeftRect = CGRect(
+            x: visibleFrame.minX,
+            y: visibleFrame.minY,
+            width: cornerSize,
+            height: cornerSize
+        )
+        if bottomLeftRect.contains(mouseLocation) {
+            // Last row, first column
+            return (gridShape.rows - 1) * gridShape.columns + 0
+        }
+        
+        // Bottom-right corner
+        let bottomRightRect = CGRect(
+            x: visibleFrame.maxX - cornerSize,
+            y: visibleFrame.minY,
+            width: cornerSize,
+            height: cornerSize
+        )
+        if bottomRightRect.contains(mouseLocation) {
+            // Last row, last column
+            return (gridShape.rows - 1) * gridShape.columns + (gridShape.columns - 1)
+        }
+        
+        // Top-left corner
+        let topLeftRect = CGRect(
+            x: visibleFrame.minX,
+            y: visibleFrame.maxY - cornerSize,
+            width: cornerSize,
+            height: cornerSize
+        )
+        if topLeftRect.contains(mouseLocation) {
+            // First row, first column
+            return 0
+        }
+        
+        // Top-right corner
+        let topRightRect = CGRect(
+            x: visibleFrame.maxX - cornerSize,
+            y: visibleFrame.maxY - cornerSize,
+            width: cornerSize,
+            height: cornerSize
+        )
+        if topRightRect.contains(mouseLocation) {
+            // First row, last column
+            return gridShape.columns - 1
+        }
+        
+        return nil
+    }
+    
+    // MARK: - Bottom Edge Detection
+    
+    /// Check if mouse is in bottom edge trigger region and return the corresponding zone index
+    private func checkBottomEdge(_ mouseLocation: CGPoint, visibleFrame: CGRect, gridShape: (columns: Int, rows: Int)) -> Int? {
+        let bottomBand = CGRect(
+            x: visibleFrame.minX,
+            y: visibleFrame.minY,
+            width: visibleFrame.width,
+            height: bottomTriggerHeight
+        )
+        
+        guard bottomBand.contains(mouseLocation) else { return nil }
+        
+        // Calculate column based on x position
+        let relativeX = mouseLocation.x - visibleFrame.minX
+        let columnWidth = visibleFrame.width / CGFloat(gridShape.columns)
+        let column = Int(floor(relativeX / columnWidth))
+        let clampedColumn = min(max(column, 0), gridShape.columns - 1)
+        
+        // Bottom row
+        let zoneIndex = (gridShape.rows - 1) * gridShape.columns + clampedColumn
+        return zoneIndex
+    }
+    
+    // MARK: - Left Edge Detection
+    
+    /// Check if mouse is in left edge trigger region and return the corresponding zone index
+    private func checkLeftEdge(_ mouseLocation: CGPoint, visibleFrame: CGRect, gridShape: (columns: Int, rows: Int)) -> Int? {
+        let leftBand = CGRect(
+            x: visibleFrame.minX,
+            y: visibleFrame.minY,
+            width: triggerRegionWidth,
+            height: visibleFrame.height
+        )
+        
+        guard leftBand.contains(mouseLocation) else { return nil }
+        
+        // Calculate row based on y position (Cocoa coordinates: origin at bottom-left)
+        let relativeY = mouseLocation.y - visibleFrame.minY
+        let rowHeight = visibleFrame.height / CGFloat(gridShape.rows)
+        let rowFromBottom = Int(floor(relativeY / rowHeight))
+        let clampedRow = min(max(rowFromBottom, 0), gridShape.rows - 1)
+        
+        // Convert to row from top (zone indices are ordered top-to-bottom)
+        let row = gridShape.rows - 1 - clampedRow
+        
+        // First column
+        let zoneIndex = row * gridShape.columns + 0
+        return zoneIndex
+    }
+    
+    // MARK: - Right Edge Detection
+    
+    /// Check if mouse is in right edge trigger region and return the corresponding zone index
+    private func checkRightEdge(_ mouseLocation: CGPoint, visibleFrame: CGRect, gridShape: (columns: Int, rows: Int)) -> Int? {
+        let rightBand = CGRect(
+            x: visibleFrame.maxX - triggerRegionWidth,
+            y: visibleFrame.minY,
+            width: triggerRegionWidth,
+            height: visibleFrame.height
+        )
+        
+        guard rightBand.contains(mouseLocation) else { return nil }
+        
+        // Calculate row based on y position (Cocoa coordinates: origin at bottom-left)
+        let relativeY = mouseLocation.y - visibleFrame.minY
+        let rowHeight = visibleFrame.height / CGFloat(gridShape.rows)
+        let rowFromBottom = Int(floor(relativeY / rowHeight))
+        let clampedRow = min(max(rowFromBottom, 0), gridShape.rows - 1)
+        
+        // Convert to row from top (zone indices are ordered top-to-bottom)
+        let row = gridShape.rows - 1 - clampedRow
+        
+        // Last column
+        let zoneIndex = row * gridShape.columns + (gridShape.columns - 1)
+        return zoneIndex
     }
 
     // MARK: - Get Frame for Zone

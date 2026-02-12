@@ -15,6 +15,16 @@ enum ZonePreset: String, Codable, CaseIterable {
     case verticalHalves = "Vertical Halves"
     case verticalThirds = "Vertical Thirds"
     case grid = "Grid (2x3)"
+    
+    // Asymmetric presets
+    case leftHalfRightQuarters = "Left Half + Right 2×2"
+    case rightHalfLeftQuarters = "Right Half + Left 2×2"
+    case topHalfBottomQuarters = "Top Half + Bottom 2×2"
+    case bottomHalfTopQuarters = "Bottom Half + Top 2×2"
+    case leftTwoThirdsRightQuarters = "Left 2/3 + Right 2×2"
+    case rightTwoThirdsLeftQuarters = "Right 2/3 + Left 2×2"
+    case leftThirdRightSixths = "Left 1/3 + Right 2×3"
+    case rightThirdLeftSixths = "Right 1/3 + Left 2×3"
 
     var description: String {
         return self.rawValue
@@ -33,6 +43,47 @@ enum ZonePreset: String, Codable, CaseIterable {
         case .verticalHalves: return 2
         case .verticalThirds: return 3
         case .grid: return 6
+        case .leftHalfRightQuarters, .rightHalfLeftQuarters,
+             .topHalfBottomQuarters, .bottomHalfTopQuarters,
+             .leftTwoThirdsRightQuarters, .rightTwoThirdsLeftQuarters:
+            return 5
+        case .leftThirdRightSixths, .rightThirdLeftSixths:
+            return 7
+        }
+    }
+
+    /// Grid shape (columns, rows) for presets with uniform grids.
+    /// Returns nil for presets without a simple grid structure or when disabled.
+    /// Used by edge/corner trigger detection to map cursor position to zone index.
+    var gridShape: (columns: Int, rows: Int)? {
+        switch self {
+        case .off:
+            return nil
+        case .thirds:
+            return (3, 1)
+        case .halves:
+            return (2, 1)
+        case .quarters:
+            return (2, 2)
+        case .sixths:
+            return (3, 2)
+        case .eighths:
+            return (4, 2)
+        case .wideLeft, .wideCenter:
+            // These have variable-width columns, only support top triggers
+            return nil
+        case .verticalHalves:
+            return (1, 2)
+        case .verticalThirds:
+            return (1, 3)
+        case .grid:
+            return (2, 3)
+        case .leftHalfRightQuarters, .rightHalfLeftQuarters,
+             .topHalfBottomQuarters, .bottomHalfTopQuarters,
+             .leftTwoThirdsRightQuarters, .rightTwoThirdsLeftQuarters,
+             .leftThirdRightSixths, .rightThirdLeftSixths:
+            // Asymmetric presets don't have uniform grids, only support top triggers
+            return nil
         }
     }
 }
